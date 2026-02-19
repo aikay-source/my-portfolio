@@ -1,0 +1,50 @@
+---
+import SectionTitle from './SectionTitle.astro';
+import ProjectCard from './ProjectCard.astro';
+
+const projects = [
+  {
+    title: 'Savewell',
+    date: '2024',
+    number: '01',
+    image: '/images/project-image 1.png',
+    slug: 'savewell',
+  },
+  {
+    title: 'Accel234',
+    date: '2024',
+    number: '02',
+    image: '/images/project-image2.png',
+    slug: 'accel234',
+  },
+  {
+    title: 'Inflo Social',
+    date: '2023',
+    number: '03',
+    image: '/images/project-image3.png',
+    slug: 'inflo-social',
+  },
+  {
+    title: 'Buzzoned',
+    date: '2023',
+    number: '04',
+    image: '/images/project-image4.png',
+    slug: 'buzzoned',
+  },
+];
+---
+
+<section class="px-6 md:px-8xl py-6xl flex flex-col gap-2xl">
+  <SectionTitle title="Selected Works" />
+
+  <div class="flex flex-col items-start md:px-[200px]">
+    {projects.map((project, i) => (
+      <div class="w-full">
+        {i > 0 && (
+          <div class="w-full h-px bg-border-tertiary my-2xl"></div>
+        )}
+        <ProjectCard {...project} />
+      </div>
+    ))}
+  </div>
+</section>

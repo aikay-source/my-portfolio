@@ -1,0 +1,15 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="flex flex-col gap-s items-start">
+  <!-- Accent bar -->
+  <div class="w-[18px] h-[5px] bg-white"></div>
+  <h2 class="font-heading text-heading-xs font-semibold text-white tracking-[--tracking-heading-xs] leading-[--text-heading-xs--line-height] uppercase">
+    {title}
+  </h2>
+</div>

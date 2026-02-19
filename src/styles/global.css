@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* ============================================
+   DESIGN TOKENS — from Figma (Samuel's Portfolio)
+   ============================================ */
+
+@theme {
+  /* --- Colors --- */
+  --color-bg-primary: #131314;
+  --color-surface-l2: #242426;
+  --color-content-primary: #FFFFFF;
+  --color-content-secondary: #F2F1ED;
+  --color-content-tertiary: #ABABB2;
+  --color-content-muted: #A3A29F;
+  --color-border-tertiary: #313033;
+  --color-card-bg: #2B2B2A;
+
+  /* --- Font Families --- */
+  --font-sans: 'Suisse Intl', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'TWK Everett', ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Spacing Scale --- */
+  --spacing-xs: 4px;
+  --spacing-s: 8px;
+  --spacing-l: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-6xl: 64px;
+  --spacing-8xl: 80px;
+
+  /* --- Font Sizes (with line-height built in) --- */
+  --text-heading-l: 32px;
+  --text-heading-l--line-height: 40px;
+
+  --text-heading-s: 20px;
+  --text-heading-s--line-height: 28px;
+
+  --text-heading-xs: 16px;
+  --text-heading-xs--line-height: 24px;
+
+  --text-body-l: 16px;
+  --text-body-l--line-height: 24px;
+
+  --text-body-m: 14px;
+  --text-body-m--line-height: 20px;
+
+  --text-body-s: 12px;
+  --text-body-s--line-height: 16px;
+
+  /* --- Letter Spacing --- */
+  --tracking-heading-l: -2px;
+  --tracking-heading-s: -1.7px;
+  --tracking-heading-xs: -0.5px;
+  --tracking-body: 0px;
+
+  /* --- Border Radius --- */
+  --radius-pill: 100px;
+  --radius-none: 0px;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+/* Suisse Intl font-face (body text) */
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/suisse-font-family/SuisseIntlTrial-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/suisse-font-family/SuisseIntlTrial-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/suisse-font-family/SuisseIntlTrial-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* TWK Everett font-face (headings) */
+@font-face {
+  font-family: 'TWK Everett';
+  src: url('/fonts/TWK Everette/TWKEverett-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Everett';
+  src: url('/fonts/TWK Everette/TWKEverett-Medium.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Everett';
+  src: url('/fonts/TWK Everette/TWKEverett-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-content-secondary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection highlight */
+::selection {
+  background-color: var(--color-content-muted);
+  color: var(--color-bg-primary);
+}

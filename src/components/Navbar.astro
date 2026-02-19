@@ -1,0 +1,131 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { label: 'Works', href: '/works' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/#contact' },
+];
+---
+
+<header
+  class="border-b border-border-tertiary/50 px-6 md:px-8xl py-xl flex items-center justify-between w-full"
+>
+  <!-- Logo -->
+  <a href="/" class="shrink-0">
+    <img src="/Logo.svg" alt="Samuel Nwokolo" class="h-[40px] w-auto" />
+  </a>
+
+  <!-- Desktop Nav Links -->
+  <nav class="hidden md:flex gap-l items-center" aria-label="Main navigation">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          'text-body-l leading-[--text-body-l--line-height] transition-colors duration-200',
+          currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+            ? 'text-white'
+            : 'text-content-secondary hover:text-white',
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+
+  <!-- Right side: Theme toggle + CTA -->
+  <div class="hidden md:flex gap-l items-center">
+    <!-- Theme Toggle -->
+    <div class="border border-border-tertiary rounded-pill p-xs flex items-center">
+      <button
+        class="p-xs rounded-pill flex items-center justify-center transition-colors duration-200"
+        aria-label="Light mode"
+        data-theme-toggle="light"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="text-content-secondary">
+          <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.17 3.17l1.06 1.06M11.77 11.77l1.06 1.06M3.17 12.83l1.06-1.06M11.77 4.23l1.06-1.06" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button
+        class="bg-surface-l2 p-xs rounded-pill flex items-center justify-center transition-colors duration-200"
+        aria-label="Dark mode"
+        data-theme-toggle="dark"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="text-content-secondary">
+          <path d="M14 8.5A6.5 6.5 0 0 1 7.5 2 5.5 5.5 0 1 0 14 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- CTA Button -->
+    <a
+      href="/#contact"
+      class="border border-border-tertiary px-l py-s text-body-l leading-[--text-body-l--line-height] text-content-secondary hover:text-white hover:border-content-muted transition-colors duration-200"
+    >
+      Let's Talk
+    </a>
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button
+    class="md:hidden flex flex-col gap-[5px] p-s"
+    aria-label="Toggle menu"
+    data-mobile-menu-toggle
+  >
+    <span class="block w-5 h-[1.5px] bg-content-secondary transition-transform duration-200" data-menu-line-1></span>
+    <span class="block w-5 h-[1.5px] bg-content-secondary transition-opacity duration-200" data-menu-line-2></span>
+    <span class="block w-5 h-[1.5px] bg-content-secondary transition-transform duration-200" data-menu-line-3></span>
+  </button>
+</header>
+
+<!-- Mobile Menu -->
+<div
+  class="md:hidden fixed inset-0 top-[88px] bg-bg-primary z-50 flex flex-col px-6 py-2xl gap-xl hidden"
+  data-mobile-menu
+>
+  {navLinks.map((link) => (
+    <a
+      href={link.href}
+      class="font-heading text-heading-s font-semibold text-content-secondary hover:text-white tracking-[--tracking-heading-s] leading-[--text-heading-s--line-height] transition-colors duration-200"
+    >
+      {link.label}
+    </a>
+  ))}
+  <div class="border-t border-border-tertiary pt-xl mt-s">
+    <a
+      href="/#contact"
+      class="inline-block border border-border-tertiary px-l py-s text-body-l text-content-secondary hover:text-white transition-colors duration-200"
+    >
+      Let's Talk
+    </a>
+  </div>
+</div>
+
+<script>
+  const toggle = document.querySelector('[data-mobile-menu-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]');
+  const line1 = document.querySelector('[data-menu-line-1]');
+  const line2 = document.querySelector('[data-menu-line-2]');
+  const line3 = document.querySelector('[data-menu-line-3]');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = !menu.classList.contains('hidden');
+      menu.classList.toggle('hidden');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+
+      if (line1 && line2 && line3) {
+        if (!isOpen) {
+          line1.style.transform = 'rotate(45deg) translate(2px, 2px)';
+          line2.style.opacity = '0';
+          line3.style.transform = 'rotate(-45deg) translate(2px, -2px)';
+        } else {
+          line1.style.transform = '';
+          line2.style.opacity = '';
+          line3.style.transform = '';
+        }
+      }
+    });
+  }
+</script>

@@ -1,0 +1,40 @@
+---
+import SectionTitle from './SectionTitle.astro';
+---
+
+<section id="contact" class="px-6 md:px-8xl py-6xl flex flex-col md:flex-row gap-l md:gap-l">
+  <div class="w-full md:w-[308px] shrink-0">
+    <SectionTitle title="Get in Touch" />
+  </div>
+  <div class="flex flex-col gap-2xl w-full md:w-[632px]">
+    <div class="flex flex-col gap-l">
+      <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height] tracking-[--tracking-body]">
+        Have a project in mind or want to collaborate? I'd love to hear from you. Let's create something great together.
+      </p>
+    </div>
+    <div class="flex flex-col gap-xs">
+      <p class="text-body-s font-semibold text-content-muted leading-[--text-body-s--line-height] uppercase">
+        Copy email
+      </p>
+      <button
+        class="text-body-l text-content-secondary leading-[--text-body-l--line-height] text-left border-b border-content-secondary/30 pb-s hover:text-white hover:border-white transition-colors duration-200 w-fit cursor-pointer"
+        data-copy-email
+      >
+        samuel@example.com
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btn = document.querySelector('[data-copy-email]');
+  if (btn) {
+    btn.addEventListener('click', async () => {
+      const email = btn.textContent?.trim() || '';
+      await navigator.clipboard.writeText(email);
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 2000);
+    });
+  }
+</script>

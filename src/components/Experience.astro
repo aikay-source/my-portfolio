@@ -1,0 +1,39 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+const experiences = [
+  {
+    company: 'Company Name',
+    role: 'UX Designer',
+    period: '2024 - Present',
+  },
+  {
+    company: 'Company Name',
+    role: 'UX Designer',
+    period: '2023 - 2024',
+  },
+];
+---
+
+<section class="px-6 md:px-8xl py-6xl flex flex-col md:flex-row gap-l md:gap-l">
+  <div class="w-full md:w-[308px] shrink-0">
+    <SectionTitle title="Experience" />
+  </div>
+  <div class="flex flex-col gap-l w-full md:w-[632px]">
+    {experiences.map((exp) => (
+      <div class="border-b border-border-tertiary/50 py-l flex flex-col">
+        <div class="flex items-center justify-between w-full">
+          <h3 class="font-heading text-heading-s font-semibold text-white tracking-[--tracking-heading-s] leading-[--text-heading-s--line-height] flex-1">
+            {exp.company}
+          </h3>
+          <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height]">
+            {exp.period}
+          </p>
+        </div>
+        <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height]">
+          {exp.role}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
