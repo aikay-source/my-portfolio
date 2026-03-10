@@ -3,37 +3,42 @@ import SectionTitle from './SectionTitle.astro';
 
 const experiences = [
   {
-    company: 'Company Name',
-    role: 'UX Designer',
-    period: '2024 - Present',
+    company: 'Odogwu Technologies',
+    role: 'PRODUCT DESIGNER',
+    date: '2023 - 2026',
   },
   {
-    company: 'Company Name',
-    role: 'UX Designer',
-    period: '2023 - 2024',
+    company: 'Consode Digital Limited',
+    role: 'PRODUCT DESIGNER',
+    date: '2023',
   },
 ];
 ---
 
-<section class="px-6 md:px-8xl py-6xl flex flex-col md:flex-row gap-l md:gap-l">
-  <div class="w-full md:w-[308px] shrink-0">
-    <SectionTitle title="Experience" />
-  </div>
-  <div class="flex flex-col gap-l w-full md:w-[632px]">
-    {experiences.map((exp) => (
-      <div class="border-b border-border-tertiary/50 py-l flex flex-col">
-        <div class="flex items-center justify-between w-full">
-          <h3 class="font-heading text-heading-s font-semibold text-white tracking-[--tracking-heading-s] leading-[--text-heading-s--line-height] flex-1">
-            {exp.company}
-          </h3>
-          <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height]">
-            {exp.period}
-          </p>
+<section class="section-border flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+  <div class="flex flex-col md:flex-row max-w-[848px] w-full items-start gap-[24px] md:gap-[16px]">
+    <!-- Section Title (left, fixed 200px on desktop) -->
+    <div class="w-full md:w-[200px] shrink-0">
+      <SectionTitle title="Experience" />
+    </div>
+
+    <!-- Experience List (right) -->
+    <div class="reveal-group flex w-full md:w-[632px] flex-col gap-[16px]">
+      {experiences.map((exp) => (
+        <div class="reveal flex flex-col gap-[8px] border-b-[0.5px] border-border-secondary py-[16px]">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-[4px] md:gap-0">
+            <h3 class="flex-1 text-[18px] md:text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+              {exp.company}
+            </h3>
+            <span class="font-mono text-[14px] leading-[20px] text-content-tertiary">
+              {exp.role}
+            </span>
+          </div>
+          <span class="font-mono text-[14px] leading-[20px] text-content-tertiary">
+            {exp.date}
+          </span>
         </div>
-        <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height]">
-          {exp.role}
-        </p>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
 </section>

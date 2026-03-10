@@ -1,38 +1,68 @@
 ---
 interface Props {
+  name?: string;
   title: string;
-  date: string;
-  number: string;
   image: string;
-  slug: string;
+  client?: string;
+  contributions: string[];
+  processLabel?: string;
+  slug?: string;
+  hasBorder?: boolean;
 }
 
-const { title, date, number, image, slug } = Astro.props;
+const { name, title, image, client, contributions, processLabel = 'CONTRIBUTION', slug, hasBorder = false } = Astro.props;
+const href = slug ? `/works/${slug}` : '#';
 ---
 
-<a href={`/works/${slug}`} class="group flex flex-col gap-xl w-full">
-  <!-- Project Image -->
-  <div class="w-full overflow-hidden">
+<a href={href} class="reveal flex flex-col gap-[24px] items-start w-full group">
+  <!-- Image -->
+  <div class:list={[
+    "h-[200px] md:h-[300px] w-full overflow-hidden",
+    hasBorder && "border border-border-secondary"
+  ]}>
     <img
       src={image}
-      alt={title}
-      class="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.02]"
+      alt={name || title}
+      class="size-full object-cover project-card-image"
       loading="lazy"
     />
   </div>
 
-  <!-- Project Details -->
-  <div class="flex items-center justify-between w-full">
-    <div class="flex flex-col">
-      <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height]">
-        {title}
-      </p>
-      <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height]">
-        {date}
-      </p>
+  <!-- Details -->
+  <div class="flex flex-col gap-[24px] items-start w-full">
+    <!-- Name + Description -->
+    <div class="flex flex-col items-start w-full">
+      {name ? (
+        <>
+          <h3 class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+            {name}
+          </h3>
+          <p class="text-[16px] leading-[24px] text-content-secondary">
+            {title}
+          </p>
+        </>
+      ) : (
+        <h3 class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+          {title}
+        </h3>
+      )}
     </div>
-    <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height]">
-      {number}
-    </p>
+
+    <!-- Contributions -->
+    <div class="flex flex-col gap-[8px] items-start">
+      <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+        {processLabel}
+      </span>
+      <div class="flex items-center gap-[8px]">
+        {contributions.map((c, i) => (
+          <>
+            <span class="text-[16px] leading-[24px] text-content-primary">{c}</span>
+            {i < contributions.length - 1 && (
+              <span class="size-[4px] rounded-full bg-border-secondary shrink-0"></span>
+            )}
+          </>
+        ))}
+      </div>
+    </div>
   </div>
 </a>

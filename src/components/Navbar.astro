@@ -1,131 +1,181 @@
 ---
-const currentPath = Astro.url.pathname;
-
-const navLinks = [
-  { label: 'Works', href: '/works' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/#contact' },
-];
 ---
 
-<header
-  class="border-b border-border-tertiary/50 px-6 md:px-8xl py-xl flex items-center justify-between w-full"
->
+<header class="section-border flex w-full items-center justify-between bg-[var(--bg-primary)] px-[16px] md:px-[40px] lg:px-[80px] py-[16px] md:py-[24px]">
   <!-- Logo -->
-  <a href="/" class="shrink-0">
-    <img src="/Logo.svg" alt="Samuel Nwokolo" class="h-[40px] w-auto" />
-  </a>
+  <div class="load-animate load-animate-delay-1 px-0 lg:px-[16px]">
+    <a href="/">
+      <span class="text-[16px] md:text-[20px] font-bold uppercase leading-[0.8] tracking-[-0.44px] text-content-primary whitespace-pre-line">Samuel
+Nwokolo</span>
+    </a>
+  </div>
 
-  <!-- Desktop Nav Links -->
-  <nav class="hidden md:flex gap-l items-center" aria-label="Main navigation">
-    {navLinks.map((link) => (
-      <a
-        href={link.href}
-        class:list={[
-          'text-body-l leading-[--text-body-l--line-height] transition-colors duration-200',
-          currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
-            ? 'text-white'
-            : 'text-content-secondary hover:text-white',
-        ]}
-      >
-        {link.label}
-      </a>
-    ))}
+  <!-- Center Nav Links (hidden on mobile) -->
+  <nav class="load-animate load-animate-delay-2 hidden md:flex items-start gap-[16px]">
+    <a href="/works" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+      WORK
+    </a>
+    <a href="/about" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+      ABOUT
+    </a>
+    <a href="/resume" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+      RESUME
+    </a>
   </nav>
 
-  <!-- Right side: Theme toggle + CTA -->
-  <div class="hidden md:flex gap-l items-center">
-    <!-- Theme Toggle -->
-    <div class="border border-border-tertiary rounded-pill p-xs flex items-center">
+  <!-- Right: Toggle + Contact Button -->
+  <div class="load-animate load-animate-delay-3 flex items-center gap-[8px] md:gap-[16px] px-0 lg:px-[16px]">
+    <!-- Mobile Menu Button -->
+    <button
+      id="mobile-menu-btn"
+      type="button"
+      class="flex md:hidden items-center justify-center p-[4px] text-content-primary"
+      aria-label="Toggle menu"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <!-- Dark/Light Toggle -->
+    <div class="flex items-center gap-[8px] rounded-[100px] border border-border-secondary bg-[var(--surface-l0)] p-[4px]">
       <button
-        class="p-xs rounded-pill flex items-center justify-center transition-colors duration-200"
-        aria-label="Light mode"
-        data-theme-toggle="light"
+        id="theme-light-btn"
+        type="button"
+        class="flex items-center rounded-[100px] p-[4px] transition-colors"
+        aria-label="Switch to light mode"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="text-content-secondary">
-          <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.17 3.17l1.06 1.06M11.77 11.77l1.06 1.06M3.17 12.83l1.06-1.06M11.77 4.23l1.06-1.06" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="3.33" fill="currentColor" />
+          <rect x="7.33" y="1" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
+          <rect x="7.33" y="12.33" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
+          <rect x="12.33" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
+          <rect x="1" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
+          <rect x="11.77" y="2.82" width="1.33" height="2.67" rx="0.67" transform="rotate(45 11.77 2.82)" fill="currentColor" />
+          <rect x="3.28" y="11.31" width="1.33" height="2.67" rx="0.67" transform="rotate(45 3.28 11.31)" fill="currentColor" />
+          <rect x="13.18" y="11.77" width="1.33" height="2.67" rx="0.67" transform="rotate(135 13.18 11.77)" fill="currentColor" />
+          <rect x="4.69" y="3.28" width="1.33" height="2.67" rx="0.67" transform="rotate(135 4.69 3.28)" fill="currentColor" />
         </svg>
       </button>
       <button
-        class="bg-surface-l2 p-xs rounded-pill flex items-center justify-center transition-colors duration-200"
-        aria-label="Dark mode"
-        data-theme-toggle="dark"
+        id="theme-dark-btn"
+        type="button"
+        class="flex items-center rounded-[100px] bg-surface-l2 p-[4px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.08)] transition-colors"
+        aria-label="Switch to dark mode"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="text-content-secondary">
-          <path d="M14 8.5A6.5 6.5 0 0 1 7.5 2 5.5 5.5 0 1 0 14 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 9.27A6 6 0 0 1 6.73 2 6 6 0 1 0 14 9.27Z" fill="currentColor" />
         </svg>
       </button>
     </div>
 
-    <!-- CTA Button -->
+    <!-- Contact Button (hidden on mobile) -->
     <a
-      href="/#contact"
-      class="border border-border-tertiary px-l py-s text-body-l leading-[--text-body-l--line-height] text-content-secondary hover:text-white hover:border-content-muted transition-colors duration-200"
+      href="mailto:nwokoloikem@gmail.com"
+      class="btn-hover hidden md:flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]"
     >
-      Let's Talk
+      <span class="flex items-center justify-center px-[4px]">
+        <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
+          CONTACT
+        </span>
+      </span>
     </a>
   </div>
-
-  <!-- Mobile Menu Button -->
-  <button
-    class="md:hidden flex flex-col gap-[5px] p-s"
-    aria-label="Toggle menu"
-    data-mobile-menu-toggle
-  >
-    <span class="block w-5 h-[1.5px] bg-content-secondary transition-transform duration-200" data-menu-line-1></span>
-    <span class="block w-5 h-[1.5px] bg-content-secondary transition-opacity duration-200" data-menu-line-2></span>
-    <span class="block w-5 h-[1.5px] bg-content-secondary transition-transform duration-200" data-menu-line-3></span>
-  </button>
 </header>
 
-<!-- Mobile Menu -->
-<div
-  class="md:hidden fixed inset-0 top-[88px] bg-bg-primary z-50 flex flex-col px-6 py-2xl gap-xl hidden"
-  data-mobile-menu
->
-  {navLinks.map((link) => (
-    <a
-      href={link.href}
-      class="font-heading text-heading-s font-semibold text-content-secondary hover:text-white tracking-[--tracking-heading-s] leading-[--text-heading-s--line-height] transition-colors duration-200"
-    >
-      {link.label}
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-[var(--bg-primary)] md:hidden">
+  <div class="flex items-center justify-between px-[16px] py-[16px]">
+    <a href="/">
+      <span class="text-[16px] font-bold uppercase leading-[0.8] tracking-[-0.44px] text-content-primary whitespace-pre-line">Samuel
+Nwokolo</span>
     </a>
-  ))}
-  <div class="border-t border-border-tertiary pt-xl mt-s">
-    <a
-      href="/#contact"
-      class="inline-block border border-border-tertiary px-l py-s text-body-l text-content-secondary hover:text-white transition-colors duration-200"
+    <button
+      id="mobile-menu-close"
+      type="button"
+      class="flex items-center justify-center p-[4px] text-content-primary"
+      aria-label="Close menu"
     >
-      Let's Talk
-    </a>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </div>
+  <nav class="flex flex-col items-start gap-[24px] px-[16px] pt-[32px]">
+    <a href="/works" class="font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">WORK</a>
+    <a href="/about" class="font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">ABOUT</a>
+    <a href="/resume" class="font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">RESUME</a>
+    <a href="mailto:nwokoloikem@gmail.com" class="btn-hover flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]">
+      <span class="px-[4px] font-mono text-[14px] font-semibold leading-[20px] text-content-primary">CONTACT</span>
+    </a>
+  </nav>
 </div>
 
 <script>
-  const toggle = document.querySelector('[data-mobile-menu-toggle]');
-  const menu = document.querySelector('[data-mobile-menu]');
-  const line1 = document.querySelector('[data-menu-line-1]');
-  const line2 = document.querySelector('[data-menu-line-2]');
-  const line3 = document.querySelector('[data-menu-line-3]');
+  function initThemeToggle() {
+    const lightBtn = document.getElementById('theme-light-btn');
+    const darkBtn = document.getElementById('theme-dark-btn');
 
-  if (toggle && menu) {
-    toggle.addEventListener('click', () => {
-      const isOpen = !menu.classList.contains('hidden');
-      menu.classList.toggle('hidden');
-      document.body.style.overflow = isOpen ? '' : 'hidden';
-
-      if (line1 && line2 && line3) {
-        if (!isOpen) {
-          line1.style.transform = 'rotate(45deg) translate(2px, 2px)';
-          line2.style.opacity = '0';
-          line3.style.transform = 'rotate(-45deg) translate(2px, -2px)';
-        } else {
-          line1.style.transform = '';
-          line2.style.opacity = '';
-          line3.style.transform = '';
-        }
+    function setTheme(theme: string) {
+      document.documentElement.classList.add('no-transitions');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
       }
+      localStorage.setItem('theme', theme);
+      updateToggleUI(theme);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.documentElement.classList.remove('no-transitions');
+        });
+      });
+    }
+
+    const shadowClass = 'shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.08)]';
+
+    function updateToggleUI(theme: string) {
+      if (theme === 'light') {
+        lightBtn?.classList.add('bg-surface-l2', shadowClass);
+        darkBtn?.classList.remove('bg-surface-l2', shadowClass);
+      } else {
+        darkBtn?.classList.add('bg-surface-l2', shadowClass);
+        lightBtn?.classList.remove('bg-surface-l2', shadowClass);
+      }
+    }
+
+    lightBtn?.addEventListener('click', () => setTheme('light'));
+    darkBtn?.addEventListener('click', () => setTheme('dark'));
+
+    const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    updateToggleUI(current);
+  }
+
+  function initMobileMenu() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    const menu = document.getElementById('mobile-menu');
+
+    menuBtn?.addEventListener('click', () => {
+      menu?.classList.remove('hidden');
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      menu?.classList.add('hidden');
+    });
+
+    // Close menu on link click
+    menu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu?.classList.add('hidden');
+      });
     });
   }
+
+  initThemeToggle();
+  initMobileMenu();
+  document.addEventListener('astro:after-swap', () => {
+    initThemeToggle();
+    initMobileMenu();
+  });
 </script>

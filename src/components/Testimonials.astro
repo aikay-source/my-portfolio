@@ -1,0 +1,63 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+const testimonials = [
+  {
+    quote: "It's been an absolute delight working with Samuel, he is a fantastic designer and I look forward to working with him again.",
+    name: 'Valentine Oleka',
+    title: 'FOUNDER, ODOGWUTECHNOLOGIES',
+    avatar: '/images/avatar-valentine.png',
+  },
+  {
+    quote: "I'm happy working with you Sam! He is responsive as hell.\nHe is fast, and the quality is up there.",
+    name: 'Bruno Pankovski',
+    title: 'AXIOM GROWTH',
+    avatar: '/images/avatar-bruno.png',
+  },
+  {
+    quote: "I've had the pleasure of working with Samuel on multiple occasions, and I continue to do so because of his exceptional diligence and profound understanding of project requirements. Samuel consistently goes the extra mile to ensure timely delivery, and his dedication to our projects has been invaluable.",
+    name: 'Krishna Kalidindi',
+    title: 'EXIMIETAS DESIGN',
+    avatar: '/images/avatar-krishna.png',
+  },
+];
+---
+
+<section class="section-border flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+  <div class="flex flex-col md:flex-row flex-1 max-w-[848px] items-start gap-[24px] md:gap-0 md:justify-between">
+    <!-- Section Title (left) -->
+    <div class="flex-1">
+      <SectionTitle title="Testimonials" />
+    </div>
+
+    <!-- Testimonials (right) -->
+    <div class="reveal-group flex w-full md:w-[632px] flex-col gap-[32px]">
+      {testimonials.map((t) => (
+        <div class="reveal flex flex-col gap-[6px]">
+          <p class="text-[16px] leading-[24px] text-content-primary whitespace-pre-line">
+            "{t.quote}"
+          </p>
+          <div class="flex items-center gap-[8px]">
+            <div class="size-[32px] shrink-0 overflow-hidden rounded-full border border-border-secondary">
+              <img
+                src={t.avatar}
+                alt={t.name}
+                class="size-full object-cover"
+                width="32"
+                height="32"
+              />
+            </div>
+            <div class="flex flex-col gap-[2px]">
+              <p class="text-[16px] leading-[24px] text-content-primary">
+                {t.name}
+              </p>
+              <p class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+                {t.title}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

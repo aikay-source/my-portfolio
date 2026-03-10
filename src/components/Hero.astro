@@ -1,49 +1,66 @@
 ---
-// Hero section: name, subtitle, description, CTAs + profile image
 ---
 
-<section class="px-6 md:px-8xl py-6xl overflow-hidden">
-  <div class="flex flex-col md:flex-row items-center justify-between md:px-[200px] gap-2xl md:gap-0">
-    <!-- Left: Content -->
-    <div class="flex flex-col gap-xl max-w-[400px]">
-      <div class="flex flex-col gap-xs">
-        <h1 class="font-heading text-heading-l font-semibold text-white tracking-[--tracking-heading-l] leading-[--text-heading-l--line-height]">
+<section class="section-border flex flex-col items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+  <div class="flex w-full max-w-[848px] flex-col-reverse md:flex-row items-center md:justify-between gap-[24px] md:gap-0">
+    <!-- Content -->
+    <div class="flex flex-col gap-[24px] items-start w-full md:w-auto">
+      <!-- Name + Label -->
+      <div class="load-animate load-animate-delay-3 flex flex-col gap-[4px] items-start">
+        <h1 class="text-[24px] md:text-[32px] font-semibold leading-[32px] md:leading-[40px] tracking-[-2px] text-content-primary">
           Samuel Nwokolo
         </h1>
-        <p class="text-body-s font-semibold text-content-muted tracking-[--tracking-body] leading-[--text-body-s--line-height] uppercase">
-          Product Designer
+        <p class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+          PRODUCT DESIGNER
         </p>
       </div>
 
-      <div class="flex flex-col gap-xl">
-        <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height] tracking-[--tracking-body]">
-          I craft intuitive digital experiences that bridge the gap between user needs and business goals. With a focus on clean design and thoughtful interactions, I help brands tell their story through purposeful interfaces.
+      <!-- Bio + Buttons -->
+      <div class="flex flex-col gap-[24px] items-start">
+        <p class="load-animate load-animate-delay-4 w-full md:w-[400px] text-[16px] leading-[24px] text-content-primary">
+          I work with founders and product teams to turn messy ideas into clear, conversion-focused designs that work for users and scale with the brand. I believe in designing not just for aesthetics but for usability, simplicity and delight.
         </p>
 
-        <div class="flex gap-l items-center">
+        <!-- CTA Buttons -->
+        <div class="load-animate load-animate-delay-5 flex items-center gap-[16px]">
           <a
-            href="/works"
-            class="border border-border-tertiary px-l py-s text-body-l text-content-secondary hover:text-white hover:border-content-muted transition-colors duration-200"
+            href="mailto:nwokoloikem@gmail.com"
+            class="btn-hover flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]"
           >
-            View Works
+            <span class="flex items-center justify-center px-[4px]">
+              <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
+                CONTACT
+              </span>
+            </span>
           </a>
           <a
-            href="/#contact"
-            class="border border-border-tertiary px-l py-s text-body-l text-content-secondary hover:text-white hover:border-content-muted transition-colors duration-200 overflow-hidden"
+            href="#"
+            class="btn-hover flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]"
           >
-            Download CV
+            <span class="flex items-center justify-center gap-[8px]">
+              <span class="flex items-center justify-center px-[4px]">
+                <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
+                  RESUME
+                </span>
+              </span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-content-primary" />
+                <path d="M4.5 4.5H11.5V11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-content-primary" />
+              </svg>
+            </span>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Right: Profile Image -->
-    <div class="border-4 border-border-tertiary w-[200px] h-[200px] shrink-0 overflow-hidden">
+    <!-- Profile Image -->
+    <div class="load-animate load-animate-delay-4 shrink-0 size-[150px] md:size-[200px] border-[4px] border-border-tertiary overflow-hidden">
       <img
-        src="/images/profile-image.png"
+        src="/images/profile.png"
         alt="Samuel Nwokolo"
-        class="w-full h-full object-cover"
-        loading="eager"
+        class="size-full object-cover"
+        width="200"
+        height="200"
       />
     </div>
   </div>

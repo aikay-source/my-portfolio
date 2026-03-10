@@ -1,0 +1,62 @@
+---
+import SectionTitle from './SectionTitle.astro';
+---
+
+<section class="section-border flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+  <div class="flex flex-col md:flex-row flex-1 max-w-[848px] items-start gap-[24px] md:gap-0 md:justify-between">
+    <!-- Section Title (left) -->
+    <div class="flex-1">
+      <SectionTitle title="Say Hi" />
+    </div>
+
+    <!-- Content (right) -->
+    <div class="reveal flex w-full md:w-[632px] flex-col gap-[32px]">
+      <p class="text-[16px] leading-[24px] text-content-primary">
+        I'm always open to hearing about new projects or collaborations.<br />
+        Send me a note and I'll get in touch!
+      </p>
+
+      <div class="flex flex-col gap-[4px]">
+        <span class="font-mono text-[12px] font-semibold text-content-tertiary">
+          Copy email
+        </span>
+        <button
+          id="copy-email-btn"
+          class="group flex items-center justify-center border-b border-content-secondary w-fit cursor-pointer bg-transparent p-0"
+          type="button"
+        >
+          <span class="text-[16px] leading-[24px] text-content-primary">
+            nwokoloikem@gmail.com
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('copy-email-btn');
+  const email = 'nwokoloikem@gmail.com';
+
+  btn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      const span = btn.querySelector('span');
+      if (span) {
+        const original = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = original;
+        }, 2000);
+      }
+    } catch {
+      const range = document.createRange();
+      const span = btn.querySelector('span');
+      if (span) {
+        range.selectNodeContents(span);
+        window.getSelection()?.removeAllRanges();
+        window.getSelection()?.addRange(range);
+      }
+    }
+  });
+</script>

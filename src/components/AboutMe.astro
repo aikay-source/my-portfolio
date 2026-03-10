@@ -2,13 +2,34 @@
 import SectionTitle from './SectionTitle.astro';
 ---
 
-<section class="px-6 md:px-8xl py-6xl flex flex-col md:flex-row gap-l md:gap-l">
-  <div class="w-full md:w-[308px] shrink-0">
-    <SectionTitle title="About Me" />
-  </div>
-  <div class="w-full md:w-[632px]">
-    <p class="text-body-l text-content-secondary leading-[--text-body-l--line-height] tracking-[--tracking-body]">
-      I'm a product designer passionate about creating digital experiences that feel intuitive and meaningful. With a background in visual design and front-end development, I bring a unique perspective to every project — blending aesthetics with functionality. I believe great design is invisible: it just works. When I'm not pushing pixels, you'll find me exploring new tools, learning about emerging tech, or sketching ideas in my notebook.
-    </p>
+<section class="section-border flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+  <div class="flex flex-col md:flex-row flex-1 max-w-[848px] items-start gap-[24px] md:gap-0 md:justify-between">
+    <!-- Section Title (left) -->
+    <div class="flex-1">
+      <SectionTitle title="About Me" />
+    </div>
+
+    <!-- Content (right) -->
+    <div class="reveal flex w-full md:w-[632px] flex-col gap-[16px]">
+      <p class="text-[28px] font-semibold leading-[36px] tracking-[-1.7px] text-content-primary">
+        My work sits at the intersection of business goals, user needs and technical constraints.
+      </p>
+      <p class="text-[16px] leading-[24px] text-content-primary">
+        Over the past 3 years, I've worked on digital products spanning hospitality, SaaS, and marketing.
+      </p>
+      <p class="text-[16px] leading-[24px] text-content-primary">
+        My design philosophy can be summed up in two words: curiosity and craft. Ask why things work the way they do, then make them better. For me, good design isn't just about clean screens or clever interactions. It's about creating products that feel intuitive, thoughtful, and just a little easier to use than they were before.
+      </p>
+      <a
+        href="/about"
+        class="btn-hover flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px] self-start"
+      >
+        <span class="flex items-center justify-center px-[4px]">
+          <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
+            ABOUT ME
+          </span>
+        </span>
+      </a>
+    </div>
   </div>
 </section>

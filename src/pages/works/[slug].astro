@@ -1,0 +1,725 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const { slug } = Astro.params;
+
+const projects: Record<string, {
+  title: string;
+  summary: string;
+  contribution: string;
+  year: string;
+}> = {
+  holidayalot: {
+    title: 'Designing Holidayalot for the 71% of travelers who find trip planning so stressful',
+    summary: 'The process of planning a trip is fragmented across a dozen tools. 67% of travelers get so overwhelmed when they try to plan a trip and they quit finishing the plan. I was one of two product designers who built Holidayalot from the ground up. I owned all user-facing design across the product and built the design system used across the product and admin surfaces. while the second designer worked on the admin side of the product. Holidayalot is a travel companion that meets users at every step of their planning journey.',
+    contribution: 'Product Design, Web design, Design system, Mobile design',
+    year: '2025',
+  },
+  virally: {
+    title: 'Reducing the time it takes for brands to find and match with the right influencers',
+    summary: 'Virally connects artists and brands with influencers for viral campaigns. As the sole designer, I designed the campaign discovery experience. The core design bet: let influencers browse and apply to campaigns instead of making brands search for influencers.',
+    contribution: 'Product Design, Web design, Design system, Mobile design',
+    year: '2024-2025',
+  },
+  hconnect: {
+    title: 'Redesigning hconnect interface',
+    summary: 'hconnect is an Integration Platform as a Service (iPaaS) for the hospitality industry that helps hotels move and synchronize data across multiple systems.\n\nAs the platform grew, its interface struggled to clearly present complex integration data. The founder reached out to me to redesign the interface using the Tailwind design system. His goal was to modernize the product and create a more professional user experience. Over two weeks, I worked closely with the founder to deliver a cleaner, more structured UI that makes system data easier to understand and manage.',
+    contribution: 'UI Design',
+    year: '2024-2025',
+  },
+};
+
+const project = projects[slug!];
+if (!project) {
+  return Astro.redirect('/works');
+}
+
+// Project images and contributions for cards
+const projectMeta: Record<string, { image: string; description: string; contributions: string[]; hasBorder?: boolean }> = {
+  holidayalot: {
+    image: '/images/projects/holidayalot.png',
+    description: 'Designing a solution for the 71% of travelers who find trip planning so stressful',
+    contributions: ['Product Design', 'Web Design', 'Mobile Design'],
+    hasBorder: true,
+  },
+  virally: {
+    image: '/images/projects/virally.png',
+    description: 'Reducing the time it takes for brands to find and match with the right influencers',
+    contributions: ['Product Design', 'Web Design'],
+  },
+  hconnect: {
+    image: '/images/projects/hconnect.png',
+    description: 'Redesigning the UI of a hotel management system',
+    contributions: ['Product Design'],
+  },
+};
+
+// Related projects (all except current)
+const relatedProjects = Object.entries(projects)
+  .filter(([key]) => key !== slug)
+  .map(([key, val]) => ({ slug: key, ...val, ...projectMeta[key] }));
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'holidayalot' } },
+    { params: { slug: 'virally' } },
+    { params: { slug: 'hconnect' } },
+  ];
+}
+---
+
+<BaseLayout title={`${project.title} — Samuel Nwokolo`}>
+  <!-- Hero / Summary -->
+  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+    <div class="flex w-full max-w-[848px] flex-col items-start gap-[32px] md:gap-[64px]">
+      <!-- Back Button -->
+      <a href="/works" class="flex items-center justify-center">
+        <div class="flex h-[24px] items-center justify-center gap-[8px]">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-content-tertiary">
+            <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="px-[4px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+            BACK
+          </span>
+        </div>
+      </a>
+
+      <!-- Heading + Summary -->
+      <div class="flex w-full flex-col items-start gap-[32px]">
+        <!-- Heading -->
+        <h1 class="w-full text-[28px] md:text-[40px] font-semibold leading-[36px] md:leading-[48px] tracking-[-2.2px] text-content-primary">
+          {project.title}
+        </h1>
+
+        <!-- Summary Row -->
+        <div class="flex flex-col md:flex-row w-full items-start gap-[16px] md:justify-between">
+          <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+            SUMMARY
+          </span>
+
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[24px]">
+            <p class="w-full whitespace-pre-line text-[16px] leading-[24px] text-content-primary">
+              {project.summary}
+            </p>
+
+            <div class="flex w-full flex-col items-start gap-[24px]">
+              <div class="flex flex-col items-start">
+                <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+                  CONTRIBUTION
+                </span>
+                <span class="text-[16px] leading-[24px] text-content-primary">
+                  {project.contribution}
+                </span>
+              </div>
+
+              <div class="flex flex-col items-start">
+                <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+                  YEAR
+                </span>
+                <span class="text-[16px] leading-[24px] text-content-primary">
+                  {project.year}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {slug === 'holidayalot' && (
+    <!-- Case Study Body -->
+    <section class="flex flex-col items-center gap-[32px] md:gap-[48px] px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+
+      <!-- Hero Image: Website Screenshot -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <img
+            src="/images/projects/holidayalot/bg-gradient.png"
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <img
+            src="/images/projects/holidayalot/bg-noise.png"
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <img
+            src="/images/projects/holidayalot/hero-website.png"
+            alt="Holidayalot website homepage"
+            class="absolute left-1/2 top-[20px] md:top-[47px] w-[90%] md:w-[727px] h-auto -translate-x-1/2 rounded-[7px] border-[4px] border-white/50"
+          />
+        </div>
+      </div>
+
+      <!-- THE PROBLEM -->
+      <div class="flex w-full max-w-[848px] flex-col items-center">
+        <div class="flex flex-col md:flex-row w-full items-start justify-center gap-[16px]">
+          <div class="md:flex-1">
+            <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+              THE PROBLEM
+            </span>
+          </div>
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[32px]">
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              Travelers have to figure out their budget using rough estimates and word-of-mouth. They have to decide when to travel without knowing what flights cost around their time off. They have to find a destination by scrolling TikTok and reading blogs. They have to book flights across multiple platforms without knowing which routes are best. They have to plan activities on Google Maps. And throughout all of this, they have to navigate visa requirements and entry rules they often don't know they need until it is too late.
+            </p>
+
+            <!-- Stats Row -->
+            <div class="flex w-full flex-col md:flex-row items-start gap-[16px] md:gap-0 md:justify-between">
+              <div class="flex w-full md:w-[161px] flex-col items-start">
+                <span class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+                  71%
+                </span>
+                <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+                  STRESSFUL TRAVEL PLANNING
+                </span>
+              </div>
+              <div class="flex w-full md:w-[161px] flex-col items-start">
+                <span class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+                  58%
+                </span>
+                <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+                  FEEL OVERWHELMED
+                </span>
+              </div>
+              <div class="flex w-full md:w-[161px] flex-col items-start">
+                <span class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+                  89%
+                </span>
+                <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+                  ABANDONED BOOKING
+                </span>
+              </div>
+            </div>
+
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              67% of travelers report paralysis from information overload when planning a trip. 37% cancel or delay trips entirely because of planning stress. Online travel agencies have the highest cart abandonment rate of any sector: 81%. The result is not just frustration. It is poor decisions: wrong visa assumptions, longer routes, unnecessary layovers, and trips that cost more than they needed to. Holidayalot was designed to close those gaps
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image: Passport Access Finder -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden">
+          <div class="relative h-[300px] md:h-[500px] w-full border border-border-secondary">
+            <div class="absolute inset-0 bg-[#131314]"></div>
+            <img
+              src="/images/projects/holidayalot/bg-gradient.png"
+              alt=""
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <img
+              src="/images/projects/holidayalot/bg-noise.png"
+              alt=""
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <img
+              src="/images/projects/holidayalot/passport-finder.png"
+              alt="Passport access finder feature"
+              class="absolute left-[5%] md:left-[73px] top-[20px] md:top-[47px] w-[90%] md:w-[688px] rounded-[8px] border-[4px] border-white/50"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- PIVOTING -->
+      <div class="flex w-full max-w-[848px] flex-col items-center">
+        <div class="flex flex-col md:flex-row w-full items-start justify-center gap-[16px]">
+          <div class="md:flex-1">
+            <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+              PIVOTING
+            </span>
+          </div>
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[32px]">
+            <h2 class="w-full text-[24px] md:text-[32px] font-semibold leading-[32px] md:leading-[40px] tracking-[-2px] text-content-primary">
+              Identifying where the real opportunity
+            </h2>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              We started with a website that had a passport access finder and a travel blog. It told users which countries their passport could access, what visa types were available, and what travel documents they needed. Useful, but it did not solve the real problem. Providing information does not get people to take a trip.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              We moved to a web app. It offered video-based trip inspiration, a trip planner with itinerary tools, curated country guides, and visa information. Better, but still not right. We were building another content and recommendation platform in a market with hundreds of them. Competing with Booking.com, Skyscanner, and every travel blog on the internet for the same users was not a position we could win.
+            </p>
+            <div class="w-full text-[16px] leading-[24px] text-content-primary">
+              <p>
+                <span class="font-semibold">The real opportunity was one level up. If Holidayalot was going to be valuable, it had to fit into the process people already had for planning a trip, not try to replace it</span>.
+              </p>
+              <p class="mt-4">
+                As a team, we mapped the end-to-end journey a traveler takes from "I want to go somewhere" to "I'm on my way." At each stage, we asked: how do people do this today, and where can we add something no existing tool provides?
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image: Journey Mapping -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[500px] w-full overflow-hidden border border-border-secondary">
+          <img
+            src="/images/projects/holidayalot/journey-mapping.png"
+            alt="User journey mapping exercise"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Image: Web App Screenshot -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden">
+          <div class="relative h-[300px] md:h-[500px] w-full border border-border-secondary">
+            <div class="absolute inset-0 bg-[#131314]"></div>
+            <img
+              src="/images/projects/holidayalot/bg-gradient.png"
+              alt=""
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <img
+              src="/images/projects/holidayalot/bg-noise.png"
+              alt=""
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <img
+              src="/images/projects/holidayalot/webapp-screenshot.png"
+              alt="Holidayalot web app"
+              class="absolute left-[5%] md:left-[73px] top-[20px] md:top-[47px] w-[90%] md:w-[696px] rounded-[8px] border-[4px] border-white/50"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- THE SOLUTION -->
+      <div class="flex w-full max-w-[848px] flex-col items-center">
+        <div class="flex flex-col md:flex-row w-full items-start justify-center gap-[16px]">
+          <div class="md:flex-1">
+            <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+              THE SOLUTION
+            </span>
+          </div>
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[32px]">
+            <p class="w-full text-[16px] font-semibold leading-[24px] text-content-primary">
+              The mapping also clarified something we had not designed for: two distinct traveler types with completely different needs.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              The first group knew where they wanted to go. What they lacked was the information to make an actual plan: visa requirements, cost estimates, the best route, what to do when they arrived. They needed a product that filled those gaps without making them start over on a new platform.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              The second group had never taken a trip before. They had no destination, no budget, no sense of where to begin. They needed guidance through every step to reach the point where a trip felt possible.
+            </p>
+            <p class="w-full text-[16px] font-semibold leading-[24px] text-content-primary">
+              The solution we came up with surfaced personalized recommendations based on location and season, guided first-time travelers through a three-step onboarding form to understand their interests and budget, and brought cost estimates, route options, and travel requirements together in one place.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image: App Screenshots Grid -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[500px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#313033]"></div>
+          <img
+            src="/images/projects/holidayalot/bg-noise.png"
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <!-- Row 1 -->
+          <img src="/images/projects/holidayalot/grid-img1.png" alt="" class="absolute left-[-5%] top-[-23%] h-[47%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <img src="/images/projects/holidayalot/grid-img4.png" alt="" class="absolute left-[32%] top-[-23%] h-[47%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <img src="/images/projects/holidayalot/grid-img1.png" alt="" class="absolute left-[69%] top-[-23%] h-[47%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <!-- Row 2 -->
+          <img src="/images/projects/holidayalot/grid-img3.png" alt="" class="absolute left-[-5%] top-[28%] h-[43%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <img src="/images/projects/holidayalot/grid-img5.png" alt="" class="absolute left-[32%] top-[28%] h-[43%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <img src="/images/projects/holidayalot/grid-img6.png" alt="" class="absolute left-[69%] top-[28%] h-[43%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <!-- Row 3 -->
+          <img src="/images/projects/holidayalot/grid-img2.png" alt="" class="absolute left-[-5%] top-[76%] h-[47%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <img src="/images/projects/holidayalot/grid-img4.png" alt="" class="absolute left-[32%] top-[76%] h-[47%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+          <img src="/images/projects/holidayalot/grid-img1.png" alt="" class="absolute left-[69%] top-[76%] h-[47%] w-[36%] rounded-[2px] border border-white/50 object-cover" />
+        </div>
+      </div>
+
+      <!-- Image: Bottom Row -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary bg-white">
+          <img
+            src="/images/projects/holidayalot/bg-gradient.png"
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <img
+            src="/images/projects/holidayalot/bg-noise.png"
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <img src="/images/projects/holidayalot/grid-img2.png" alt="" class="absolute left-[-3%] top-[24%] h-[52%] w-[36%] object-cover" />
+          <img src="/images/projects/holidayalot/grid-img4.png" alt="" class="absolute left-[36%] top-[24%] h-[52%] w-[36%] object-cover" />
+          <img src="/images/projects/holidayalot/grid-img1.png" alt="" class="absolute left-[74%] top-[24%] h-[52%] w-[36%] object-cover" />
+        </div>
+      </div>
+
+      <!-- THE OUTCOME -->
+      <div class="flex w-full max-w-[848px] flex-col items-center">
+        <div class="flex flex-col md:flex-row w-full items-start justify-center gap-[16px]">
+          <div class="md:flex-1">
+            <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+              THE OUTCOME
+            </span>
+          </div>
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[32px]">
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              Unfortunately, the product was paused.
+            </p>
+            <h2 class="w-full text-[24px] md:text-[32px] font-semibold leading-[32px] md:leading-[40px] tracking-[-2px] text-content-primary">
+              Metrics I would have measured
+            </h2>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              The reduction in time and money users spent on poor travel decisions. Whether users were completing trip plans they would previously have abandoned. Whether first-time travelers were getting to a booked trip instead of giving up at the research stage. The 37% of travelers who cancel due to planning stress and the 81% who abandon booking platforms without completing a purchase were the signals we were designing against.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  )}
+
+  {slug === 'virally' && (
+    <!-- Virally Case Study Body -->
+    <section class="flex flex-col items-center gap-[32px] md:gap-[48px] px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+
+      <!-- Hero Image: Dashboard -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#49494d]"></div>
+          <img src="/images/projects/virally/bg-gradient.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img src="/images/projects/virally/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/projects/virally/hero-dashboard.png"
+            alt="Virally dashboard"
+            class="absolute left-1/2 top-[20px] md:top-[47px] w-[95%] md:w-[800px] h-auto -translate-x-1/2 object-contain"
+          />
+        </div>
+      </div>
+
+      <!-- THE PROBLEM -->
+      <div class="flex w-full max-w-[848px] flex-col items-center">
+        <div class="flex flex-col md:flex-row w-full items-start justify-center gap-[16px]">
+          <div class="md:flex-1">
+            <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+              THE PROBLEM
+            </span>
+          </div>
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[32px]">
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              Artists and brands spend days searching for influencers manually, negotiating rates one by one, and coordinating content across platforms. Influencers have no central place to find campaigns that match their audience and niche.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              Existing platforms like TikTok Creator Marketplace, Influencity, Upfluence, and Aspire all put the burden on brands to search for influencers. Influencers sit and wait. This creates a bottleneck: brands spend time filtering through thousands of profiles, and qualified influencers never see relevant opportunities.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image: Campaign Detail -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#49494d]"></div>
+          <img src="/images/projects/virally/bg-gradient.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img src="/images/projects/virally/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/projects/virally/campaign-detail.png"
+            alt="Campaign detail page"
+            class="absolute left-[3%] md:left-[23px] top-[20px] md:top-[47px] w-[94%] md:w-[800px] h-auto object-contain"
+          />
+        </div>
+      </div>
+
+      <!-- THE SOLUTION -->
+      <div class="flex w-full max-w-[848px] flex-col items-center">
+        <div class="flex flex-col md:flex-row w-full items-start justify-center gap-[16px]">
+          <div class="md:flex-1">
+            <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+              THE SOLUTION
+            </span>
+          </div>
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[32px]">
+            <h2 class="w-full text-[24px] md:text-[32px] font-semibold leading-[32px] md:leading-[40px] tracking-[-2px] text-content-primary">
+              Flipping the discovery model
+            </h2>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              Instead of brands searching for influencers, influencers browse a campaign listing page and apply to campaigns that fit them. This removed the matching bottleneck from brands and gave influencers control over the work they take on.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              Two campaign types support different brand needs. General campaigns are open to all eligible influencers, maximizing reach for things like hashtag challenges or product awareness pushes. Specific campaigns let brands invite handpicked influencers when quality control and brand alignment matter more than scale.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              Every design decision came from auditing four competitor platforms. I had no user data and no ability to run usability tests. The product owner defined the core requirements. My job was translating those requirements into flows that made sense given what competitors had validated in the market.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image: 3-Column Grid -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#49494d]"></div>
+          <img src="/images/projects/virally/bg-gradient.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img src="/images/projects/virally/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <!-- Column 1 -->
+          <img src="/images/projects/virally/grid-col1.png" alt="" class="absolute left-[-21%] top-[-45%] h-[65%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid-col1.png" alt="" class="absolute left-[-21%] top-[20%] h-[65%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid-col1.png" alt="" class="absolute left-[-21%] top-[85%] h-[65%] w-[47%] object-cover" />
+          <!-- Column 2 -->
+          <img src="/images/projects/virally/grid-col2.png" alt="" class="absolute left-[26%] top-[-45%] h-[65%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid-col2.png" alt="" class="absolute left-[26%] top-[20%] h-[65%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid-col2.png" alt="" class="absolute left-[26%] top-[85%] h-[65%] w-[47%] object-cover" />
+          <!-- Column 3 -->
+          <img src="/images/projects/virally/grid-col3.png" alt="" class="absolute left-[73%] top-[-45%] h-[65%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid-col3.png" alt="" class="absolute left-[73%] top-[20%] h-[65%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid-col3.png" alt="" class="absolute left-[73%] top-[85%] h-[65%] w-[47%] object-cover" />
+        </div>
+      </div>
+
+      <!-- Image: 3-Column Grid 2 -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#49494d]"></div>
+          <img src="/images/projects/virally/bg-gradient.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img src="/images/projects/virally/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <!-- Left column -->
+          <img src="/images/projects/virally/grid2-left.png" alt="" class="absolute left-[-21%] top-[-47%] h-[66%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid2-left.png" alt="" class="absolute left-[-21%] top-[19%] h-[66%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid2-left.png" alt="" class="absolute left-[-21%] top-[85%] h-[66%] w-[47%] object-cover" />
+          <!-- Center column -->
+          <img src="/images/projects/virally/grid2-top.png" alt="" class="absolute left-1/2 top-[-14%] h-[65%] w-[47%] -translate-x-1/2 object-cover" />
+          <img src="/images/projects/virally/grid2-center.png" alt="" class="absolute left-1/2 top-[52%] h-[66%] w-[47%] -translate-x-1/2 object-cover" />
+          <img src="/images/projects/virally/grid2-center.png" alt="" class="absolute left-1/2 top-[118%] h-[66%] w-[47%] -translate-x-1/2 object-cover" />
+          <!-- Right column -->
+          <img src="/images/projects/virally/grid-col1.png" alt="" class="absolute left-[73%] top-[-47%] h-[65%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid2-right.png" alt="" class="absolute left-[73%] top-[19%] h-[66%] w-[47%] object-cover" />
+          <img src="/images/projects/virally/grid2-right.png" alt="" class="absolute left-[73%] top-[85%] h-[66%] w-[47%] object-cover" />
+        </div>
+      </div>
+
+      <!-- THE OUTCOME -->
+      <div class="flex w-full max-w-[848px] flex-col items-center">
+        <div class="flex flex-col md:flex-row w-full items-start justify-center gap-[16px]">
+          <div class="md:flex-1">
+            <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+              THE OUTCOME
+            </span>
+          </div>
+          <div class="flex w-full md:w-[617px] flex-col items-start gap-[32px]">
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              The platform is still in development, but the discovery model is ready to test with real users so there are no engagement metrics, no conversion data, and no user feedback to report.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              What I would measure first: campaign completion rate, the percentage of users who start creating a campaign and successfully publish it. This is the single metric that would reveal whether the creation flow works. If brands and artists can't get through campaign setup, nothing else on the platform matters.
+            </p>
+            <p class="w-full text-[16px] leading-[24px] text-content-primary">
+              A secondary metric would be application rate on general campaigns: how many influencers apply per published campaign. That number would tell us whether the listing model actually drives discovery.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  )}
+
+  {slug === 'hconnect' && (
+    <!-- hconnect Case Study Body -->
+    <section class="flex flex-col items-center gap-[32px] md:gap-[48px] px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+
+      <!-- Hero Image: Old UI -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#49494d]"></div>
+          <img src="/images/projects/hconnect/bg-gradient.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+        </div>
+      </div>
+
+      <!-- THE PROBLEM -->
+      <div class="flex flex-col md:flex-row w-full max-w-[848px] items-start gap-[16px] md:justify-between">
+        <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+          THE PROBLEM
+        </span>
+        <div class="flex w-full md:w-[617px] flex-col items-start gap-[16px]">
+          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+            hconnect is a data-heavy product. Users rely on the platform to monitor integrations, manage system connections, and ensure that information flows correctly between different hotel systems. However, the existing interface made this work harder than necessary. Several issues limited usability and clarity.
+          </p>
+          <ul class="w-full list-disc pl-[24px] text-[16px] leading-[24px] text-content-primary">
+            <li>The platform handled important integration workflows, but the visual design felt outdated and did not reflect the sophistication of the product.</li>
+            <li>The interface did not consistently follow the Tailwind design system. This lead to inconsistent components scattered all over the platform</li>
+            <li>Because the platform presents a large amount of technical information, small layout issues quickly compounded into a heavier cognitive load for users.</li>
+          </ul>
+          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+            The redesign needed to solve these problems without disrupting the workflows that users relied on.
+          </p>
+        </div>
+      </div>
+
+      <!-- Image: Redesigned Dashboard -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden">
+          <div class="absolute inset-0 bg-bg-pressed"></div>
+          <img src="/images/projects/hconnect/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/projects/hconnect/redesigned-dashboard.png"
+            alt="Redesigned hconnect dashboard"
+            class="absolute left-1/2 top-[calc(50%+60px)] md:top-[calc(50%+110px)] w-[95%] md:w-[750px] h-auto -translate-x-1/2 -translate-y-1/2 object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- THE SOLUTION -->
+      <div class="flex flex-col md:flex-row w-full max-w-[848px] items-start gap-[16px] md:justify-between">
+        <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+          THE SOLUTION
+        </span>
+        <div class="flex w-full md:w-[617px] flex-col items-start">
+          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+            The final redesign introduced a modern, structured interface that makes integration data easier to understand and interact with.
+          </p>
+        </div>
+      </div>
+
+      <!-- Image: Side-by-side detail views -->
+      <div class="flex flex-col md:flex-row w-full max-w-[848px] items-start gap-[16px]">
+        <div class="relative h-[200px] md:h-[450px] w-full md:flex-1 overflow-hidden">
+          <div class="absolute inset-0 bg-[#313033]"></div>
+          <img src="/images/projects/hconnect/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/projects/hconnect/detail-view.png"
+            alt="Detail view - left panel"
+            class="absolute left-[-50%] md:left-[-432px] top-[10%] md:top-[48px] h-auto w-[160%] md:w-[800px] object-cover"
+          />
+        </div>
+        <div class="relative h-[200px] md:h-[450px] w-full md:flex-1 overflow-hidden">
+          <div class="absolute inset-0 bg-[#313033]"></div>
+          <img src="/images/projects/hconnect/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/projects/hconnect/detail-view.png"
+            alt="Detail view - right panel"
+            class="absolute left-[6%] md:left-[48px] top-[10%] md:top-[48px] h-auto w-[160%] md:w-[800px] object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Image: Mobile + sidebar view -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#49494d]"></div>
+          <img src="/images/projects/hconnect/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/projects/hconnect/mobile-view.png"
+            alt="Mobile view"
+            class="absolute left-[calc(50%+14%)] top-1/2 h-[88%] w-auto -translate-x-1/2 -translate-y-1/2 object-cover"
+          />
+          <img
+            src="/images/projects/hconnect/sidebar-narrow.png"
+            alt="Sidebar navigation"
+            class="absolute left-[12%] top-[12%] h-[82%] w-auto object-cover"
+          />
+          <img
+            src="/images/projects/hconnect/sidebar-icons.png"
+            alt="Sidebar icons"
+            class="absolute left-[24%] top-[12%] h-[82%] w-auto object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Image: Profile + sidebar view -->
+      <div class="w-full max-w-[848px]">
+        <div class="relative h-[250px] md:h-[450px] w-full overflow-hidden border border-border-secondary">
+          <div class="absolute inset-0 bg-[#49494d]"></div>
+          <img src="/images/projects/hconnect/bg-noise.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/projects/hconnect/profile-view.png"
+            alt="Profile view"
+            class="absolute left-[calc(50%-10%)] top-1/2 h-[88%] w-auto -translate-x-1/2 -translate-y-1/2 object-cover"
+          />
+          <img
+            src="/images/projects/hconnect/profile-sidebar.png"
+            alt="Profile sidebar"
+            class="absolute right-[4%] top-[9%] h-[85%] w-auto object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- THE OUTCOME -->
+      <div class="flex flex-col md:flex-row w-full max-w-[848px] items-start gap-[16px] md:justify-between">
+        <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+          THE OUTCOME
+        </span>
+        <div class="flex w-full md:w-[617px] flex-col items-start">
+          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+            The redesign helped modernize the product while preserving the workflows users depend on. By introducing stronger hierarchy, clearer layouts, and consistent components, the interface now communicates complex system information more effectively.
+          </p>
+        </div>
+      </div>
+
+    </section>
+  )}
+
+  <!-- See Also -->
+  <section class="section-border section-border-top flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+    <div class="flex w-full max-w-[848px] flex-col items-center gap-[32px]">
+      <!-- Section Title -->
+      <div class="w-full flex flex-col items-start gap-[8px]">
+        <div class="h-[5px] w-[18px] bg-content-primary"></div>
+        <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+          SEE ALSO
+        </span>
+      </div>
+
+      <!-- Project Cards — responsive grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[32px] md:gap-[16px] w-full">
+        {relatedProjects.map((proj) => (
+          <a href={`/works/${proj.slug}`} class="reveal flex flex-col gap-[24px] items-start group">
+            <!-- Image -->
+            <div class:list={[
+              "h-[200px] md:h-[300px] w-full overflow-hidden",
+              proj.hasBorder && "border border-border-secondary"
+            ]}>
+              <img
+                src={proj.image}
+                alt={proj.description}
+                class="size-full object-cover project-card-image"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- Details -->
+            <div class="flex flex-col gap-[24px] items-start w-full">
+              <!-- Name + Description -->
+              <div class="flex flex-col items-start w-full">
+                <h3 class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+                  {proj.slug.charAt(0).toUpperCase() + proj.slug.slice(1)}
+                </h3>
+                <p class="text-[16px] leading-[24px] text-content-secondary">
+                  {proj.description}
+                </p>
+              </div>
+
+              <!-- Contributions -->
+              <div class="flex flex-col gap-[8px] items-start">
+                <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+                  CONTRIBUTION
+                </span>
+                <div class="flex items-center gap-[8px] flex-wrap">
+                  {proj.contributions.map((c: string, i: number) => (
+                    <>
+                      <span class="text-[16px] leading-[24px] text-content-primary">{c}</span>
+                      {i < proj.contributions.length - 1 && (
+                        <span class="size-[4px] rounded-full bg-border-secondary shrink-0"></span>
+                      )}
+                    </>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

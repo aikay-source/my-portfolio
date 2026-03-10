@@ -1,20 +1,25 @@
----
-const year = new Date().getFullYear();
----
+<footer class="flex flex-col md:flex-row items-start md:items-center justify-between gap-[16px] md:gap-0 px-[16px] md:px-[40px] lg:px-[80px] pb-[32px] pt-[16px]">
+  <div class="px-0 lg:px-[32px]">
+    <p class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
+      &copy; 2026 Designed and built with love by Samuel Nwokolo
+    </p>
+  </div>
 
-<footer class="border-t border-border-tertiary/50 px-6 md:px-8xl py-xl flex items-center justify-between w-full">
-  <p class="text-body-s leading-[--text-body-s--line-height] text-content-muted">
-    &copy; {year} Samuel. All rights reserved.
-  </p>
-  <div class="flex gap-l items-center">
-    <a href="#" class="text-body-s text-content-muted hover:text-white transition-colors duration-200" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+  <nav class="flex items-center gap-[8px] px-0 lg:px-[32px] flex-wrap">
+    <a href="mailto:nwokoloikem@gmail.com" class="link-hover font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary border-b-[0.5px] border-border-secondary">
+      Email
+    </a>
+    <span class="size-[2px] rounded-full bg-content-tertiary"></span>
+    <a href="#" class="link-hover font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary border-b-[0.5px] border-border-secondary">
       LinkedIn
     </a>
-    <a href="#" class="text-body-s text-content-muted hover:text-white transition-colors duration-200" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-      Twitter
-    </a>
-    <a href="#" class="text-body-s text-content-muted hover:text-white transition-colors duration-200" aria-label="Dribbble" target="_blank" rel="noopener noreferrer">
+    <span class="size-[2px] rounded-full bg-content-tertiary"></span>
+    <a href="#" class="link-hover font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary border-b-[0.5px] border-border-secondary">
       Dribbble
     </a>
-  </div>
+    <span class="size-[2px] rounded-full bg-content-tertiary"></span>
+    <a href="#" class="link-hover font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary border-b-[0.5px] border-border-secondary">
+      Twitter
+    </a>
+  </nav>
 </footer>
