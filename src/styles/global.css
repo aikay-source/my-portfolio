@@ -127,9 +127,11 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
+  overflow-x: hidden;
   background-color: var(--bg-primary);
   color: var(--content-secondary);
   font-family: var(--font-sans);

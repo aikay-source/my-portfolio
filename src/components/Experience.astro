@@ -16,7 +16,7 @@ const experiences = [
 ---
 
 <section class="section-border flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-  <div class="flex flex-col md:flex-row max-w-[848px] w-full items-start gap-[24px] md:gap-[16px]">
+  <div class="flex flex-col md:flex-row max-w-[848px] w-full items-start gap-[16px]">
     <!-- Section Title (left, fixed 200px on desktop) -->
     <div class="w-full md:w-[200px] shrink-0">
       <SectionTitle title="Experience" />
@@ -26,8 +26,8 @@ const experiences = [
     <div class="reveal-group flex w-full md:w-[632px] flex-col gap-[16px]">
       {experiences.map((exp) => (
         <div class="reveal flex flex-col gap-[8px] border-b-[0.5px] border-border-secondary py-[16px]">
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-[4px] md:gap-0">
-            <h3 class="flex-1 text-[18px] md:text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-[8px] md:gap-0">
+            <h3 class="flex-1 text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
               {exp.company}
             </h3>
             <span class="font-mono text-[14px] leading-[20px] text-content-tertiary">

@@ -6,7 +6,7 @@ const projects = [
   {
     name: 'Holidayalot',
     title: 'Designing a solution for the 71% of travelers who find trip planning so stressful',
-    image: '/images/projects/holidayalot.png',
+    image: '/images/projects/holidayalot/holidayalot_homepage_cover.png',
     contributions: ['Product Design', 'Web Design'],
     slug: 'holidayalot',
     hasBorder: true,
@@ -14,14 +14,14 @@ const projects = [
   {
     name: 'Virally',
     title: 'Reducing the time it takes for brands to find and match with the right influencers',
-    image: '/images/projects/virally.png',
+    image: '/images/projects/virally/virally_homepage_cover.png',
     contributions: ['Product Design', 'Web Design'],
     slug: 'virally',
   },
   {
     name: 'hconnect',
     title: 'Redesigning the UI of a hotel management system',
-    image: '/images/projects/hconnect.png',
+    image: '/images/projects/hconnect/hconnect_hompage_cover.png',
     contributions: ['Product Design'],
     slug: 'hconnect',
   },
@@ -37,7 +37,7 @@ const projects = [
 
     <!-- Project Grid: 2 columns, 64px row gap, 16px column gap -->
     <div class="flex w-full flex-col gap-[32px]">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[48px] md:gap-y-[64px] w-full">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[64px] w-full">
         {projects.map((project) => (
           <ProjectCard {...project} />
         ))}

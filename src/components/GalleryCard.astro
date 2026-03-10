@@ -8,7 +8,7 @@ const { title, image } = Astro.props;
 ---
 
 <div class="reveal flex flex-col gap-[24px] items-start">
-  <div class="h-[200px] md:h-[300px] w-full overflow-hidden border border-border-secondary bg-[var(--card-bg)]">
+  <div class="h-[272px] md:h-[300px] w-full overflow-hidden border border-border-tertiary bg-[var(--card-bg)]">
     <img
       src={image}
       alt={title}
@@ -16,7 +16,7 @@ const { title, image } = Astro.props;
       loading="lazy"
     />
   </div>
-  <h3 class="text-[16px] font-semibold leading-[24px] tracking-[-0.5px] text-content-primary">
+  <h3 class="text-[14px] md:text-[16px] font-semibold leading-[20px] md:leading-[24px] tracking-[-0.5px] text-content-primary">
     {title}
   </h3>
 </div>
