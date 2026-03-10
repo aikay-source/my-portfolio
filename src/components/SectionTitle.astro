@@ -7,9 +7,8 @@ const { title } = Astro.props;
 ---
 
 <div class="flex flex-col gap-s items-start">
-  <!-- Accent bar -->
-  <div class="w-[18px] h-[5px] bg-white"></div>
-  <h2 class="font-heading text-heading-xs font-semibold text-white tracking-[--tracking-heading-xs] leading-[--text-heading-xs--line-height] uppercase">
+  <div class="h-[5px] w-[18px] bg-content-primary"></div>
+  <span class="font-mono text-[12px] font-semibold uppercase text-content-tertiary">
     {title}
-  </h2>
+  </span>
 </div>

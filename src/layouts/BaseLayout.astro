@@ -1,16 +1,18 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
-const { title, description = "Samuel — Product Designer & Developer" } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const {
+  title = 'Samuel Nwokolo — Product Designer',
+  description = 'UX/Product Designer portfolio. I work with founders and product teams to turn messy ideas into clear, conversion-focused designs.',
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -19,25 +21,105 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-
     <title>{title}</title>
     <ViewTransitions />
+    <script is:inline>
+      // Theme initialization — runs before paint to prevent FOUC
+      (function () {
+        const saved = localStorage.getItem('theme');
+        const preferred = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        const theme = saved || preferred;
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+
+      // Preserve theme across View Transitions (client-side navigation)
+      document.addEventListener('astro:before-swap', (e) => {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light') {
+          e.newDocument.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          e.newDocument.documentElement.removeAttribute('data-theme');
+        }
+      });
+    </script>
   </head>
-  <body>
-    <div class="max-w-[1440px] mx-auto">
+  <body class="min-h-screen">
+    <div class="page-wrapper relative mx-auto max-w-[1440px]">
       <Navbar />
       <main>
         <slot />
       </main>
       <Footer />
     </div>
+
+    <!-- Bottom viewport blur overlay -->
+    <div class="viewport-blur"></div>
+
+    <script>
+      import Lenis from 'lenis';
+
+      function initLenis() {
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+        });
+
+        function raf(time: number) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        return lenis;
+      }
+
+      function initBlurToggle() {
+        const blur = document.querySelector('.viewport-blur');
+        if (!blur) return;
+
+        function checkScroll() {
+          const scrollBottom = window.scrollY + window.innerHeight;
+          const pageHeight = document.documentElement.scrollHeight;
+          // Hide blur when within 100px of page bottom
+          blur.classList.toggle('is-hidden', pageHeight - scrollBottom < 100);
+        }
+
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        checkScroll();
+      }
+
+      function initScrollReveal() {
+        const els = document.querySelectorAll('.reveal:not(.is-visible)');
+        if (!els.length) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+        );
+
+        els.forEach((el) => observer.observe(el));
+      }
+
+      initLenis();
+      initScrollReveal();
+      initBlurToggle();
+
+      document.addEventListener('astro:after-swap', () => {
+        initLenis();
+        initScrollReveal();
+        initBlurToggle();
+      });
+    </script>
   </body>
 </html>

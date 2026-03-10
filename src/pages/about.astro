@@ -1,11 +1,78 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Experience from '../components/Experience.astro';
+import Cta from '../components/Cta.astro';
 ---
 
-<BaseLayout title="About — Samuel" description="Learn more about Samuel's background, skills, and experience.">
-  <section class="min-h-[calc(100vh-88px)] flex items-center justify-center">
-    <h1 class="font-heading text-heading-l font-semibold text-white tracking-[--tracking-heading-l] leading-[--text-heading-l--line-height]">
-      About — coming soon.
-    </h1>
+<BaseLayout title="About — Samuel Nwokolo">
+  <!-- Hero -->
+  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+    <div class="flex w-full max-w-[848px] items-center gap-[16px]">
+      <div class="flex flex-col items-start gap-[4px]">
+        <h1 class="text-[24px] md:text-[32px] font-semibold leading-[32px] md:leading-[40px] tracking-[-2px] text-content-primary">
+          About me
+        </h1>
+        <p class="text-[16px] leading-[24px] text-content-tertiary">
+          Sit with your ambient ambition.
+        </p>
+      </div>
+    </div>
   </section>
+
+  <!-- Bio -->
+  <section class="section-border flex justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+    <div class="flex flex-col md:flex-row w-full max-w-[848px] items-center gap-[24px] md:gap-[16px]">
+      <!-- Profile Image -->
+      <div class="reveal relative w-full md:w-[400px] h-[300px] md:h-[400px] shrink-0 overflow-hidden">
+        <img
+          src="/images/about-profile.png"
+          alt="Samuel Nwokolo"
+          class="h-full w-full object-cover"
+        />
+      </div>
+
+      <!-- Text Content -->
+      <div class="reveal flex flex-1 flex-col items-start gap-[16px]">
+        <h2 class="w-full text-[22px] md:text-[28px] font-semibold leading-[30px] md:leading-[36px] tracking-[-1.7px] text-content-primary">
+          I'm a designer who helps teams turn complex ideas into simple, usable products.
+        </h2>
+
+        <div class="flex flex-col gap-[24px]">
+          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
+            I care about understanding how things work, but even more about making them work better for the people using them.
+          </p>
+
+          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
+            When I'm not working, I'm at the gym or in the pool trying to swim better than last time. It resets me.
+          </p>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex items-center gap-[16px]">
+          <a
+            href="mailto:nwokoloikem@gmail.com"
+            class="btn-hover flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]"
+          >
+            <span class="px-[4px] font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
+              CONTACT
+            </span>
+          </a>
+          <a
+            href="/resume"
+            class="btn-hover flex items-center justify-center gap-[8px] border border-border-secondary bg-[var(--bg-primary)] p-[12px]"
+          >
+            <span class="px-[4px] font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
+              RESUME
+            </span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-content-primary">
+              <path d="M4.5 11.5L11.5 4.5M11.5 4.5H5.5M11.5 4.5V10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Experience />
+  <Cta />
 </BaseLayout>

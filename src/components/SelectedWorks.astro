@@ -4,47 +4,56 @@ import ProjectCard from './ProjectCard.astro';
 
 const projects = [
   {
-    title: 'Savewell',
-    date: '2024',
-    number: '01',
-    image: '/images/project-image 1.png',
-    slug: 'savewell',
+    name: 'Holidayalot',
+    title: 'Designing a solution for the 71% of travelers who find trip planning so stressful',
+    image: '/images/projects/holidayalot.png',
+    contributions: ['Product Design', 'Web Design'],
+    slug: 'holidayalot',
+    hasBorder: true,
   },
   {
-    title: 'Accel234',
-    date: '2024',
-    number: '02',
-    image: '/images/project-image2.png',
-    slug: 'accel234',
+    name: 'Virally',
+    title: 'Reducing the time it takes for brands to find and match with the right influencers',
+    image: '/images/projects/virally.png',
+    contributions: ['Product Design', 'Web Design'],
+    slug: 'virally',
   },
   {
-    title: 'Inflo Social',
-    date: '2023',
-    number: '03',
-    image: '/images/project-image3.png',
-    slug: 'inflo-social',
-  },
-  {
-    title: 'Buzzoned',
-    date: '2023',
-    number: '04',
-    image: '/images/project-image4.png',
-    slug: 'buzzoned',
+    name: 'hconnect',
+    title: 'Redesigning the UI of a hotel management system',
+    image: '/images/projects/hconnect.png',
+    contributions: ['Product Design'],
+    slug: 'hconnect',
   },
 ];
 ---
 
-<section class="px-6 md:px-8xl py-6xl flex flex-col gap-2xl">
-  <SectionTitle title="Selected Works" />
+<section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+  <div class="flex w-full max-w-[848px] flex-col gap-[32px] items-center">
+    <!-- Section Title -->
+    <div class="w-full">
+      <SectionTitle title="Selected Works" />
+    </div>
 
-  <div class="flex flex-col items-start md:px-[200px]">
-    {projects.map((project, i) => (
-      <div class="w-full">
-        {i > 0 && (
-          <div class="w-full h-px bg-border-tertiary my-2xl"></div>
-        )}
-        <ProjectCard {...project} />
+    <!-- Project Grid: 2 columns, 64px row gap, 16px column gap -->
+    <div class="flex w-full flex-col gap-[32px]">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[48px] md:gap-y-[64px] w-full">
+        {projects.map((project) => (
+          <ProjectCard {...project} />
+        ))}
       </div>
-    ))}
+
+      <!-- SEE ALL Button -->
+      <a
+        href="/works"
+        class="btn-hover flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px] self-start"
+      >
+        <span class="flex items-center justify-center px-[4px]">
+          <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
+            SEE ALL
+          </span>
+        </span>
+      </a>
+    </div>
   </div>
 </section>

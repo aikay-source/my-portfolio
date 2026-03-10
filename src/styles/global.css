@@ -1,25 +1,115 @@
 @import "tailwindcss";
 
 /* ============================================
-   DESIGN TOKENS — from Figma (Samuel's Portfolio)
+   Font Declarations
+   ============================================ */
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist/Geist-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono/GeistMono-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   Design Tokens — Dark Mode (default)
+   ============================================ */
+
+:root {
+  --bg-primary: #141413;
+  --bg-hover: #1a1a19;
+  --bg-pressed: #111110;
+  --surface-l2: #3d3d3c;
+  --content-primary: #ffffff;
+  --content-secondary: #f2f1ed;
+  --content-tertiary: #a3a29f;
+  --border-secondary: #3d3d3c;
+  --border-tertiary: #3d3d3c;
+  --card-bg: #5e5e5c;
+  --image-border: #262625;
+  --surface-l0: #050505;
+}
+
+/* ============================================
+   Design Tokens — Light Mode
+   ============================================ */
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-hover: #f0f0f2;
+  --bg-pressed: #e1e0e5;
+  --surface-l2: #f0f0f2;
+  --content-primary: #131314;
+  --content-secondary: #313033;
+  --content-tertiary: #616166;
+  --border-secondary: #929199;
+  --border-tertiary: #c4c4cc;
+  --card-bg: #c4c4cc;
+  --image-border: #c4c4cc;
+  --surface-l0: #f8f8fa;
+}
+
+/* ============================================
+   Tailwind Theme Extensions
    ============================================ */
 
 @theme {
-  /* --- Colors --- */
-  --color-bg-primary: #131314;
-  --color-surface-l2: #242426;
-  --color-content-primary: #FFFFFF;
-  --color-content-secondary: #F2F1ED;
-  --color-content-tertiary: #ABABB2;
-  --color-content-muted: #A3A29F;
-  --color-border-tertiary: #313033;
-  --color-card-bg: #2B2B2A;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
 
-  /* --- Font Families --- */
-  --font-sans: 'Suisse Intl', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'TWK Everett', ui-sans-serif, system-ui, sans-serif;
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-hover: var(--bg-hover);
+  --color-bg-pressed: var(--bg-pressed);
+  --color-surface-l2: var(--surface-l2);
+  --color-content-primary: var(--content-primary);
+  --color-content-secondary: var(--content-secondary);
+  --color-content-tertiary: var(--content-tertiary);
+  --color-border-secondary: var(--border-secondary);
+  --color-border-tertiary: var(--border-tertiary);
+  --color-card-bg: var(--card-bg);
+  --color-image-border: var(--image-border);
 
-  /* --- Spacing Scale --- */
   --spacing-xs: 4px;
   --spacing-s: 8px;
   --spacing-l: 16px;
@@ -28,104 +118,337 @@
   --spacing-6xl: 64px;
   --spacing-8xl: 80px;
 
-  /* --- Font Sizes (with line-height built in) --- */
-  --text-heading-l: 32px;
-  --text-heading-l--line-height: 40px;
-
-  --text-heading-s: 20px;
-  --text-heading-s--line-height: 28px;
-
-  --text-heading-xs: 16px;
-  --text-heading-xs--line-height: 24px;
-
-  --text-body-l: 16px;
-  --text-body-l--line-height: 24px;
-
-  --text-body-m: 14px;
-  --text-body-m--line-height: 20px;
-
-  --text-body-s: 12px;
-  --text-body-s--line-height: 16px;
-
-  /* --- Letter Spacing --- */
-  --tracking-heading-l: -2px;
-  --tracking-heading-s: -1.7px;
-  --tracking-heading-xs: -0.5px;
-  --tracking-body: 0px;
-
-  /* --- Border Radius --- */
   --radius-pill: 100px;
-  --radius-none: 0px;
 }
 
 /* ============================================
-   BASE STYLES
+   Base Styles
    ============================================ */
-
-/* Suisse Intl font-face (body text) */
-@font-face {
-  font-family: 'Suisse Intl';
-  src: url('/fonts/suisse-font-family/SuisseIntlTrial-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Suisse Intl';
-  src: url('/fonts/suisse-font-family/SuisseIntlTrial-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Suisse Intl';
-  src: url('/fonts/suisse-font-family/SuisseIntlTrial-Semibold.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* TWK Everett font-face (headings) */
-@font-face {
-  font-family: 'TWK Everett';
-  src: url('/fonts/TWK Everette/TWKEverett-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'TWK Everett';
-  src: url('/fonts/TWK Everette/TWKEverett-Medium.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'TWK Everett';
-  src: url('/fonts/TWK Everette/TWKEverett-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-bg-primary);
-  color: var(--color-content-secondary);
+  background-color: var(--bg-primary);
+  color: var(--content-secondary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Selection highlight */
 ::selection {
-  background-color: var(--color-content-muted);
-  color: var(--color-bg-primary);
+  background-color: var(--content-primary);
+  color: var(--bg-primary);
+}
+
+/* ============================================
+   Noise Texture Overlay
+   ============================================ */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+[data-theme="light"] body::before {
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+}
+
+/* ============================================
+   Page Border Lines
+   ============================================ */
+
+.page-wrapper::before,
+.page-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.5px;
+  background: var(--border-tertiary);
+  z-index: 10;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .page-wrapper::before,
+  .page-wrapper::after {
+    display: block;
+  }
+}
+
+.page-wrapper::before {
+  left: 80px;
+}
+
+.page-wrapper::after {
+  right: 80px;
+}
+
+/* Section border with intersection markers */
+.section-border {
+  position: relative;
+  border-bottom: 0.5px solid var(--border-tertiary);
+}
+
+.section-border::before,
+.section-border::after {
+  content: '';
+  position: absolute;
+  bottom: -2.5px;
+  width: 5px;
+  height: 5px;
+  background: var(--border-tertiary);
+  z-index: 11;
+  transform: translate(-50%, 50%);
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .section-border::before,
+  .section-border::after {
+    display: block;
+  }
+}
+
+.section-border::before {
+  left: 80px;
+  bottom: 0;
+}
+
+.section-border::after {
+  right: 80px;
+  bottom: 0;
+  transform: translate(50%, 50%);
+}
+
+/* Section border-top with intersection markers */
+.section-border-top {
+  position: relative;
+  border-top: 0.5px solid var(--border-tertiary);
+}
+
+.section-border-top::before,
+.section-border-top::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--border-tertiary);
+  z-index: 11;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .section-border-top::before,
+  .section-border-top::after {
+    display: block;
+  }
+}
+
+.section-border-top::before {
+  left: 80px;
+}
+
+.section-border-top::after {
+  right: 80px;
+  transform: translate(50%, -50%);
+}
+
+/* ============================================
+   Lenis Smooth Scroll
+   ============================================ */
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ============================================
+   Bottom Viewport Blur Overlay
+   ============================================ */
+
+.viewport-blur {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  pointer-events: none;
+  z-index: 99;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 50%);
+  mask-image: linear-gradient(to bottom, transparent, black 50%);
+  transition: opacity 0.4s ease;
+}
+
+.viewport-blur.is-hidden {
+  opacity: 0;
+}
+
+/* ============================================
+   Page Load Animation
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Navbar entrance */
+.load-animate {
+  opacity: 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.load-animate-delay-1 { animation-delay: 0ms; }
+.load-animate-delay-2 { animation-delay: 100ms; }
+.load-animate-delay-3 { animation-delay: 200ms; }
+.load-animate-delay-4 { animation-delay: 300ms; }
+.load-animate-delay-5 { animation-delay: 400ms; }
+.load-animate-delay-6 { animation-delay: 500ms; }
+
+/* ============================================
+   Scroll Reveal Animations
+   ============================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children inside a reveal-group */
+.reveal-group > .reveal:nth-child(1) { transition-delay: 0ms; }
+.reveal-group > .reveal:nth-child(2) { transition-delay: 100ms; }
+.reveal-group > .reveal:nth-child(3) { transition-delay: 200ms; }
+.reveal-group > .reveal:nth-child(4) { transition-delay: 300ms; }
+.reveal-group > .reveal:nth-child(5) { transition-delay: 400ms; }
+.reveal-group > .reveal:nth-child(6) { transition-delay: 500ms; }
+
+/* ============================================
+   Hover Animations
+   ============================================ */
+
+/* Project card image zoom */
+.project-card-image {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a:hover .project-card-image {
+  transform: scale(1.04);
+}
+
+/* Buttons */
+/* Disable all transitions during theme toggle */
+.no-transitions,
+.no-transitions *,
+.no-transitions *::before,
+.no-transitions *::after {
+  transition: none !important;
+}
+
+.btn-hover {
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hover:hover {
+  background-color: var(--bg-hover);
+}
+
+.btn-hover:active {
+  transform: scale(0.97);
+  background-color: var(--bg-pressed);
+}
+
+/* Nav links — sliding underline from left */
+.nav-link {
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--content-tertiary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Footer social links — sliding underline */
+.link-hover {
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-hover:hover {
+  color: var(--content-primary);
+}
+
+/* ============================================
+   View Transitions
+   ============================================ */
+
+::view-transition-old(root) {
+  animation: fadeOut 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::view-transition-new(root) {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

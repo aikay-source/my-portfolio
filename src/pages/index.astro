@@ -2,22 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import SelectedWorks from '../components/SelectedWorks.astro';
+import Testimonials from '../components/Testimonials.astro';
 import AboutMe from '../components/AboutMe.astro';
 import Experience from '../components/Experience.astro';
-import Contact from '../components/Contact.astro';
-import Explorations from '../components/Explorations.astro';
+import Cta from '../components/Cta.astro';
 ---
 
-<BaseLayout title="Samuel — Portfolio">
+<BaseLayout>
   <Hero />
-  <hr class="border-border-tertiary/50 border-t" />
   <SelectedWorks />
-  <hr class="border-border-tertiary/50 border-t" />
+  <Testimonials />
   <AboutMe />
-  <hr class="border-border-tertiary/50 border-t" />
   <Experience />
-  <hr class="border-border-tertiary/50 border-t" />
-  <Contact />
-  <hr class="border-border-tertiary/50 border-t" />
-  <Explorations />
+  <Cta />
 </BaseLayout>
