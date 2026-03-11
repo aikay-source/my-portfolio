@@ -1,63 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import { projects, getProjectBySlug, getRelatedProjects } from '../../data/projects';
 
 const { slug } = Astro.params;
-
-const projects: Record<string, {
-  title: string;
-  summary: string;
-  contribution: string;
-  year: string;
-}> = {
-  holidayalot: {
-    title: 'Designing Holidayalot for the 71% of travelers who find trip planning so stressful',
-    summary: 'The process of planning a trip is fragmented across a dozen tools. 67% of travelers get so overwhelmed when they try to plan a trip and they quit finishing the plan. I was one of two product designers who built Holidayalot from the ground up. I owned all user-facing design across the product and built the design system used across the product and admin surfaces. while the second designer worked on the admin side of the product. Holidayalot is a travel companion that meets users at every step of their planning journey.',
-    contribution: 'Product Design, Web design, Design system, Mobile design',
-    year: '2025',
-  },
-  virally: {
-    title: 'Reducing the time it takes for brands to find and match with the right influencers',
-    summary: 'Virally connects artists and brands with influencers for viral campaigns. As the sole designer, I designed the campaign discovery experience. The core design bet: let influencers browse and apply to campaigns instead of making brands search for influencers.',
-    contribution: 'Product Design, Web design, Design system, Mobile design',
-    year: '2024-2025',
-  },
-  hconnect: {
-    title: 'Redesigning hconnect interface',
-    summary: 'hconnect is an Integration Platform as a Service (iPaaS) for the hospitality industry that helps hotels move and synchronize data across multiple systems.\n\nAs the platform grew, its interface struggled to clearly present complex integration data. The founder reached out to me to redesign the interface using the Tailwind design system. His goal was to modernize the product and create a more professional user experience. Over two weeks, I worked closely with the founder to deliver a cleaner, more structured UI that makes system data easier to understand and manage.',
-    contribution: 'UI Design',
-    year: '2024-2025',
-  },
-};
-
-const project = projects[slug!];
+const project = getProjectBySlug(slug!);
 if (!project) {
   return Astro.redirect('/works');
 }
 
-// Project images and contributions for cards
-const projectMeta: Record<string, { image: string; description: string; contributions: string[]; hasBorder?: boolean }> = {
-  holidayalot: {
-    image: '/images/projects/holidayalot/holidayalot_homepage_cover.png',
-    description: 'Designing a solution for the 71% of travelers who find trip planning so stressful',
-    contributions: ['Product Design', 'Web Design', 'Mobile Design'],
-    hasBorder: true,
-  },
-  virally: {
-    image: '/images/projects/virally/virally_homepage_cover.png',
-    description: 'Reducing the time it takes for brands to find and match with the right influencers',
-    contributions: ['Product Design', 'Web Design'],
-  },
-  hconnect: {
-    image: '/images/projects/hconnect/hconnect_hompage_cover.png',
-    description: 'Redesigning the UI of a hotel management system',
-    contributions: ['Product Design'],
-  },
-};
-
-// Related projects (all except current)
-const relatedProjects = Object.entries(projects)
-  .filter(([key]) => key !== slug)
-  .map(([key, val]) => ({ slug: key, ...val, ...projectMeta[key] }));
+const relatedProjects = getRelatedProjects(slug!);
 
 export function getStaticPaths() {
   return [
@@ -68,9 +21,9 @@ export function getStaticPaths() {
 }
 ---
 
-<BaseLayout title={`${project.title} — Samuel Nwokolo`}>
+<BaseLayout title={`${project.title} — Samuel Nwokolo`} description={project.summary.split('\n')[0].slice(0, 160)}>
   <!-- Hero / Summary -->
-  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[64px]">
+  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex w-full max-w-[848px] flex-col items-start gap-[32px] md:gap-[64px]">
       <!-- Back Button -->
       <a href="/works" class="flex items-center justify-center">
@@ -98,7 +51,7 @@ export function getStaticPaths() {
           </span>
 
           <div class="flex w-full md:w-[617px] flex-col items-start gap-[24px]">
-            <p class="w-full whitespace-pre-line text-[16px] leading-[24px] text-content-primary">
+            <p class="w-full whitespace-pre-line text-[16px] leading-[24px] text-content-secondary">
               {project.summary}
             </p>
 
@@ -437,19 +390,19 @@ export function getStaticPaths() {
 
       <!-- THE PROBLEM -->
       <div class="flex flex-col md:flex-row w-full max-w-[848px] items-start gap-[16px] md:justify-between">
-        <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+        <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
           THE PROBLEM
         </span>
         <div class="flex w-full md:w-[617px] flex-col items-start gap-[16px]">
-          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
             hconnect is a data-heavy product. Users rely on the platform to monitor integrations, manage system connections, and ensure that information flows correctly between different hotel systems. However, the existing interface made this work harder than necessary. Several issues limited usability and clarity.
           </p>
-          <ul class="w-full list-disc pl-[24px] text-[16px] leading-[24px] text-content-primary">
+          <ul class="w-full list-disc pl-[24px] text-[16px] leading-[24px] text-content-secondary">
             <li>The platform handled important integration workflows, but the visual design felt outdated and did not reflect the sophistication of the product.</li>
             <li>The interface did not consistently follow the Tailwind design system. This lead to inconsistent components scattered all over the platform</li>
             <li>Because the platform presents a large amount of technical information, small layout issues quickly compounded into a heavier cognitive load for users.</li>
           </ul>
-          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
             The redesign needed to solve these problems without disrupting the workflows that users relied on.
           </p>
         </div>
@@ -466,11 +419,11 @@ export function getStaticPaths() {
 
       <!-- THE SOLUTION -->
       <div class="flex flex-col md:flex-row w-full max-w-[848px] items-start gap-[16px] md:justify-between">
-        <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+        <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
           THE SOLUTION
         </span>
         <div class="flex w-full md:w-[617px] flex-col items-start">
-          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
             The final redesign introduced a modern, structured interface that makes integration data easier to understand and interact with.
           </p>
         </div>
@@ -505,11 +458,11 @@ export function getStaticPaths() {
 
       <!-- THE OUTCOME -->
       <div class="flex flex-col md:flex-row w-full max-w-[848px] items-start gap-[16px] md:justify-between">
-        <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
+        <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
           THE OUTCOME
         </span>
         <div class="flex w-full md:w-[617px] flex-col items-start">
-          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
             The redesign helped modernize the product while preserving the workflows users depend on. By introducing stronger hierarchy, clearer layouts, and consistent components, the interface now communicates complex system information more effectively.
           </p>
         </div>
@@ -519,63 +472,15 @@ export function getStaticPaths() {
   )}
 
   <!-- See Also -->
-  <section class="section-border section-border-top flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[64px]">
+  <section class="section-border section-border-top flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex w-full max-w-[848px] flex-col items-center gap-[32px]">
-      <!-- Section Title -->
-      <div class="w-full flex flex-col items-start gap-[8px]">
-        <div class="h-[5px] w-[18px] bg-content-primary"></div>
-        <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
-          SEE ALSO
-        </span>
+      <div class="w-full">
+        <SectionTitle title="See Also" />
       </div>
 
-      <!-- Project Cards — responsive grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-[32px] md:gap-[16px] w-full">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[32px] md:gap-y-[64px] w-full">
         {relatedProjects.map((proj) => (
-          <a href={`/works/${proj.slug}`} class="reveal flex flex-col gap-[24px] items-start group">
-            <!-- Image -->
-            <div class:list={[
-              "h-[300px] w-full overflow-hidden",
-              proj.hasBorder && "border border-border-secondary"
-            ]}>
-              <img
-                src={proj.image}
-                alt={proj.description}
-                class="size-full object-cover project-card-image"
-                loading="lazy"
-              />
-            </div>
-
-            <!-- Details -->
-            <div class="flex flex-col gap-[24px] items-start w-full">
-              <!-- Name + Description -->
-              <div class="flex flex-col items-start w-full">
-                <h3 class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
-                  {proj.slug.charAt(0).toUpperCase() + proj.slug.slice(1)}
-                </h3>
-                <p class="text-[16px] leading-[24px] text-content-secondary">
-                  {proj.description}
-                </p>
-              </div>
-
-              <!-- Contributions -->
-              <div class="flex flex-col gap-[8px] items-start">
-                <span class="font-mono text-[12px] leading-[16px] text-content-tertiary">
-                  CONTRIBUTION
-                </span>
-                <div class="flex items-center gap-[8px] flex-wrap">
-                  {proj.contributions.map((c: string, i: number) => (
-                    <>
-                      <span class="text-[16px] leading-[24px] text-content-primary">{c}</span>
-                      {i < proj.contributions.length - 1 && (
-                        <span class="size-[4px] rounded-full bg-border-secondary shrink-0"></span>
-                      )}
-                    </>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </a>
+          <ProjectCard {...proj} />
         ))}
       </div>
     </div>

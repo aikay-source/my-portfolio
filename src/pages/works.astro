@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import GalleryCard from '../components/GalleryCard.astro';
+import { projects } from '../data/projects';
 
 const galleryItems = [
   { title: 'envoice login screen', image: '/images/gallery/envoice login screen.png' },
@@ -19,35 +20,11 @@ const galleryItems = [
   { title: 'Housing.co landing page', image: '/images/gallery/housing.co_landing_page.png' },
 ];
 
-const projects = [
-  {
-    name: 'Holidayalot',
-    title: 'Designing a solution for the 71% of travelers who find trip planning so stressful',
-    image: '/images/projects/holidayalot/holidayalot_homepage_cover.png',
-    contributions: ['Product Design', 'Web Design'],
-    slug: 'holidayalot',
-    hasBorder: true,
-  },
-  {
-    name: 'Virally',
-    title: 'Reducing the time it takes for brands to find and match with the right influencers',
-    image: '/images/projects/virally/virally_homepage_cover.png',
-    contributions: ['Product Design', 'Web Design'],
-    slug: 'virally',
-  },
-  {
-    name: 'hconnect',
-    title: 'Redesigning the UI of a hotel management system',
-    image: '/images/projects/hconnect/hconnect_hompage_cover.png',
-    contributions: ['Product Design'],
-    slug: 'hconnect',
-  },
-];
 ---
 
-<BaseLayout title="Works — Samuel Nwokolo">
+<BaseLayout title="Works — Samuel Nwokolo" description="Selected works and gallery explorations by Samuel Nwokolo, a product designer focused on usability and delight.">
   <!-- Works Hero -->
-  <section class="section-border flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[64px]">
+  <section class="section-border flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex w-full max-w-[848px] items-center gap-[16px]">
       <h1 class="text-[28px] md:text-[32px] font-semibold leading-[36px] md:leading-[40px] tracking-[-2px] text-content-primary">
         Works
@@ -56,24 +33,24 @@ const projects = [
   </section>
 
   <!-- Selected Works -->
-  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[64px]">
+  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex w-full max-w-[848px]">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[64px] w-full">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[32px] md:gap-y-[64px] w-full">
         {projects.map((project) => (
-          <ProjectCard {...project} />
+          <div data-scroll-reveal><ProjectCard {...project} /></div>
         ))}
       </div>
     </div>
   </section>
 
   <!-- Gallery -->
-  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[64px]">
+  <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex w-full max-w-[848px] flex-col gap-[24px] md:gap-[32px]">
       <SectionTitle title="Gallery" />
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-[32px] md:gap-[48px_16px]">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[32px] md:gap-x-[16px] md:gap-y-[48px]">
         {galleryItems.map((item) => (
-          <GalleryCard title={item.title} image={item.image} />
+          <div data-scroll-reveal><GalleryCard title={item.title} image={item.image} /></div>
         ))}
       </div>
     </div>

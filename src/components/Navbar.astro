@@ -85,7 +85,7 @@
 </header>
 
 <!-- Mobile Menu Overlay -->
-<div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-[var(--bg-primary)] md:hidden">
+<div id="mobile-menu" class="fixed inset-0 z-50 bg-[var(--bg-primary)] md:hidden mobile-menu-panel">
   <!-- Header row: logo + close button -->
   <div class="flex items-center justify-between px-[16px] py-[16px]">
     <a href="/">
@@ -208,20 +208,31 @@
     const closeBtn = document.getElementById('mobile-menu-close');
     const menu = document.getElementById('mobile-menu');
 
-    menuBtn?.addEventListener('click', () => {
-      menu?.classList.remove('hidden');
-    });
+    let isOpen = false;
 
-    closeBtn?.addEventListener('click', () => {
-      menu?.classList.add('hidden');
-    });
+    function openMenu() {
+      if (!menu || isOpen) return;
+      isOpen = true;
+      menu.classList.add('is-open');
+    }
+
+    function closeMenu() {
+      if (!menu || !isOpen) return;
+      isOpen = false;
+      menu.classList.remove('is-open');
+    }
+
+    menuBtn?.addEventListener('click', openMenu);
+    closeBtn?.addEventListener('click', closeMenu);
 
     // Close menu on link click
     menu?.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        menu?.classList.add('hidden');
-      });
+      link.addEventListener('click', closeMenu);
     });
+
+    // Fade out on scroll/swipe
+    menu?.addEventListener('touchmove', closeMenu, { passive: true });
+    menu?.addEventListener('wheel', closeMenu, { passive: true });
   }
 
   initThemeToggle();

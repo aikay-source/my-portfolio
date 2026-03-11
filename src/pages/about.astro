@@ -4,7 +4,7 @@ import Experience from '../components/Experience.astro';
 import Cta from '../components/Cta.astro';
 ---
 
-<BaseLayout title="About — Samuel Nwokolo">
+<BaseLayout title="About — Samuel Nwokolo" description="Learn about Samuel Nwokolo, a product designer who works with founders and teams to create conversion-focused designs.">
   <!-- Hero -->
   <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex w-full max-w-[848px] items-center gap-[16px]">
@@ -23,7 +23,7 @@ import Cta from '../components/Cta.astro';
   <section class="section-border flex justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex flex-col md:flex-row w-full max-w-[848px] items-center gap-[24px] md:gap-[16px]">
       <!-- Profile Image -->
-      <div class="reveal relative w-full md:w-[400px] h-[300px] md:h-[400px] shrink-0 overflow-hidden">
+      <div data-scroll-reveal class="relative w-full md:w-[400px] h-[300px] md:h-[400px] shrink-0 overflow-hidden">
         <img
           src="/images/about-profile.png"
           alt="Samuel Nwokolo"
@@ -32,7 +32,7 @@ import Cta from '../components/Cta.astro';
       </div>
 
       <!-- Text Content -->
-      <div class="reveal flex flex-1 flex-col items-start gap-[16px]">
+      <div data-scroll-reveal class="flex flex-1 flex-col items-start gap-[16px]">
         <h2 class="w-full text-[22px] md:text-[28px] font-semibold leading-[30px] md:leading-[36px] tracking-[-1.7px] text-content-primary">
           I'm a designer who helps teams turn complex ideas into simple, usable products.
         </h2>
