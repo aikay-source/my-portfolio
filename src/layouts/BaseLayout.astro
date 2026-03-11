@@ -7,12 +7,16 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const {
   title = 'Samuel Nwokolo — Product Designer',
   description = 'UX/Product Designer portfolio. I work with founders and product teams to turn messy ideas into clear, conversion-focused designs.',
+  ogImage = '/images/profile.png',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -21,7 +25,28 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Font preloading -->
+    <link rel="preload" href="/fonts/geist/Geist-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist/Geist-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-mono/GeistMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+
     <title>{title}</title>
     <ViewTransitions />
     <script is:inline>
@@ -55,70 +80,89 @@ const {
       <Footer />
     </div>
 
-    <!-- Bottom viewport blur overlay -->
-    <div class="viewport-blur"></div>
-
     <script>
       import Lenis from 'lenis';
 
+      let lenisInstance: Lenis | null = null;
+      let rafId: number | null = null;
+
       function initLenis() {
-        const lenis = new Lenis({
+        if (lenisInstance) {
+          lenisInstance.destroy();
+          lenisInstance = null;
+        }
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+
+        lenisInstance = new Lenis({
           duration: 1.2,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
         });
 
         function raf(time: number) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
+          lenisInstance?.raf(time);
+          rafId = requestAnimationFrame(raf);
         }
-        requestAnimationFrame(raf);
-
-        return lenis;
+        rafId = requestAnimationFrame(raf);
       }
 
-      function initBlurToggle() {
-        const blur = document.querySelector('.viewport-blur');
-        if (!blur) return;
+      function initViewportBlur() {
+        // Remove existing container (for view transition re-init)
+        document.querySelector('.viewport-blur-container')?.remove();
 
-        function checkScroll() {
-          const scrollBottom = window.scrollY + window.innerHeight;
-          const pageHeight = document.documentElement.scrollHeight;
-          // Hide blur when within 100px of page bottom
-          blur.classList.toggle('is-hidden', pageHeight - scrollBottom < 100);
-        }
+        const container = document.createElement('div');
+        container.className = 'viewport-blur-container';
 
-        window.addEventListener('scroll', checkScroll, { passive: true });
-        checkScroll();
+        const blurValues = [0.039, 0.078, 0.156, 0.3125, 0.625, 1.25, 2.5, 5];
+        const layerCount = blurValues.length;
+
+        blurValues.forEach((blur, i) => {
+          const layer = document.createElement('div');
+          const start = (i / layerCount) * 100;
+          const mid = ((i + 0.5) / layerCount) * 100;
+          const end = ((i + 1) / layerCount) * 100;
+          layer.style.cssText = `
+            backdrop-filter: blur(${blur}px);
+            -webkit-backdrop-filter: blur(${blur}px);
+            mask-image: linear-gradient(to bottom, transparent ${start}%, black ${mid}%, black ${end}%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent ${start}%, black ${mid}%, black ${end}%);
+          `;
+          container.appendChild(layer);
+        });
+
+        document.body.appendChild(container);
       }
 
       function initScrollReveal() {
-        const els = document.querySelectorAll('.reveal:not(.is-visible)');
-        if (!els.length) return;
+        const elements = document.querySelectorAll('[data-scroll-reveal]');
+        if (!elements.length) return;
 
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
+                entry.target.classList.add('revealed');
                 observer.unobserve(entry.target);
               }
             });
           },
-          { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+          { threshold: 0.1, rootMargin: '0px 0px -80px 0px' }
         );
 
-        els.forEach((el) => observer.observe(el));
+        elements.forEach((el) => observer.observe(el));
       }
 
       initLenis();
+      initViewportBlur();
       initScrollReveal();
-      initBlurToggle();
 
       document.addEventListener('astro:after-swap', () => {
         initLenis();
+        initViewportBlur();
         initScrollReveal();
-        initBlurToggle();
       });
     </script>
   </body>

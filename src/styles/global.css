@@ -127,9 +127,11 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
+  overflow-x: hidden;
   background-color: var(--bg-primary);
   color: var(--content-secondary);
   font-family: var(--font-sans);
@@ -150,7 +152,7 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 9997;
   pointer-events: none;
   opacity: 0.15;
   mix-blend-mode: overlay;
@@ -285,84 +287,40 @@ html.lenis, html.lenis body {
 }
 
 /* ============================================
-   Bottom Viewport Blur Overlay
-   ============================================ */
-
-.viewport-blur {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  pointer-events: none;
-  z-index: 99;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 50%);
-  mask-image: linear-gradient(to bottom, transparent, black 50%);
-  transition: opacity 0.4s ease;
-}
-
-.viewport-blur.is-hidden {
-  opacity: 0;
-}
-
-/* ============================================
    Page Load Animation
    ============================================ */
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    filter: blur(8px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
+    filter: blur(0px);
     transform: translateY(0);
   }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; filter: blur(8px); }
+  to { opacity: 1; filter: blur(0px); }
 }
 
-/* Navbar entrance */
+/* Page load entrance */
 .load-animate {
   opacity: 0;
+  filter: blur(8px);
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .load-animate-delay-1 { animation-delay: 0ms; }
-.load-animate-delay-2 { animation-delay: 100ms; }
-.load-animate-delay-3 { animation-delay: 200ms; }
-.load-animate-delay-4 { animation-delay: 300ms; }
-.load-animate-delay-5 { animation-delay: 400ms; }
-.load-animate-delay-6 { animation-delay: 500ms; }
-
-/* ============================================
-   Scroll Reveal Animations
-   ============================================ */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger children inside a reveal-group */
-.reveal-group > .reveal:nth-child(1) { transition-delay: 0ms; }
-.reveal-group > .reveal:nth-child(2) { transition-delay: 100ms; }
-.reveal-group > .reveal:nth-child(3) { transition-delay: 200ms; }
-.reveal-group > .reveal:nth-child(4) { transition-delay: 300ms; }
-.reveal-group > .reveal:nth-child(5) { transition-delay: 400ms; }
-.reveal-group > .reveal:nth-child(6) { transition-delay: 500ms; }
+.load-animate-delay-2 { animation-delay: 60ms; }
+.load-animate-delay-3 { animation-delay: 120ms; }
+.load-animate-delay-4 { animation-delay: 180ms; }
+.load-animate-delay-5 { animation-delay: 240ms; }
+.load-animate-delay-6 { animation-delay: 300ms; }
 
 /* ============================================
    Hover Animations
@@ -370,11 +328,15 @@ html.lenis, html.lenis body {
 
 /* Project card image zoom */
 .project-card-image {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 a:hover .project-card-image {
   transform: scale(1.04);
+}
+
+a:active .project-card-image {
+  transform: scale(0.98);
 }
 
 /* Buttons */
@@ -419,7 +381,11 @@ a:hover .project-card-image {
   background: var(--content-tertiary);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:active {
+  transform: scale(0.97);
 }
 
 .nav-link:hover::after {
@@ -437,18 +403,92 @@ a:hover .project-card-image {
 }
 
 /* ============================================
+   Viewport Blur Overlay (Daniela-Rivas style)
+   ============================================ */
+
+.viewport-blur-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  z-index: 9990;
+  pointer-events: none;
+}
+
+.viewport-blur-container > div {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ============================================
+   Scroll Reveal (translateY only — blur handled by overlay)
+   ============================================ */
+
+[data-scroll-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-scroll-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport-blur-container {
+    display: none;
+  }
+
+  [data-scroll-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================
    View Transitions
    ============================================ */
 
 ::view-transition-old(root) {
-  animation: fadeOut 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeOut 0.25s cubic-bezier(0.7, 0, 0.84, 0);
 }
 
 ::view-transition-new(root) {
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes fadeOut {
   from { opacity: 1; }
   to { opacity: 0; }
+}
+
+/* ============================================
+   Mobile Menu
+   ============================================ */
+
+.mobile-menu-panel {
+  opacity: 0;
+  transform: translateY(-8px);
+  filter: blur(4px);
+  pointer-events: none;
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu-panel.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0px);
+  pointer-events: auto;
 }
