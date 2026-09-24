@@ -189,23 +189,6 @@ body::before {
   pointer-events: none;
 }
 
-/* Top-border mirror of .content-divider */
-.content-divider-top {
-  position: relative;
-}
-
-.content-divider-top::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  max-width: calc(100% - 32px);
-  border-top: 0.5px solid var(--border-tertiary);
-  pointer-events: none;
-}
-
 /* Section border with intersection markers */
 .section-border {
   position: relative;

@@ -27,7 +27,7 @@ export const projects: Project[] = [
     slug: 'migor',
     name: 'Migor',
     title: 'Reducing the time it takes for brands to find and match with the right influencers',
-    summary: 'Migor is a fintech app that helps renters build credit through the rent they already pay. I designed the onboarding and core product experience, focused on making a financial product feel simple and approachable from the first screen.',
+    summary: 'Migor helps brands find and match with the right influencers faster, cutting the time spent searching profiles and negotiating deals one by one. I designed the onboarding and matching experience end to end, focused on making discovery feel effortless from the first screen.',
     image: '/images/projects/migor/migor_homepage_cover_1.png',
     contributions: ['Product Design', 'App Design'],
     contribution: 'Product Design, App design',
