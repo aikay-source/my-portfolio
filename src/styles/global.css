@@ -167,35 +167,43 @@ body::before {
 }
 
 /* ============================================
-   Page Border Lines
+   Content Dividers (narrow, no corner markers)
    ============================================ */
 
-.page-wrapper::before,
-.page-wrapper::after {
+/* Slim horizontal divider spanning only the content column width.
+   Used for inter-section boundaries everywhere except the header's
+   bottom edge and the section directly above the Footer. */
+.content-divider {
+  position: relative;
+}
+
+.content-divider::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  max-width: calc(100% - 32px);
+  border-bottom: 0.5px solid var(--border-tertiary);
+  pointer-events: none;
+}
+
+/* Top-border mirror of .content-divider */
+.content-divider-top {
+  position: relative;
+}
+
+.content-divider-top::before {
   content: '';
   position: absolute;
   top: 0;
-  bottom: 0;
-  width: 0.5px;
-  background: var(--border-tertiary);
-  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  max-width: calc(100% - 32px);
+  border-top: 0.5px solid var(--border-tertiary);
   pointer-events: none;
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .page-wrapper::before,
-  .page-wrapper::after {
-    display: block;
-  }
-}
-
-.page-wrapper::before {
-  left: 80px;
-}
-
-.page-wrapper::after {
-  right: 80px;
 }
 
 /* Section border with intersection markers */
