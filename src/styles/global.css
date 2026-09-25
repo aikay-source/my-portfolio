@@ -261,6 +261,38 @@ body::before {
   transform: translate(50%, -50%);
 }
 
+/* Above the 1440px design width, extend the full-width hairline itself to
+   the true viewport edges (the page shell is centered via mx-auto, so a
+   100vw background layer centered on the element lands flush with both
+   edges) while the corner markers and page content stay at their existing
+   1440px-relative position. */
+@media (min-width: 1440px) {
+  .section-border {
+    border-bottom: none;
+    background-image: linear-gradient(var(--border-tertiary), var(--border-tertiary));
+    background-repeat: no-repeat;
+    background-size: 100vw 0.5px;
+    background-position: center bottom;
+  }
+
+  .section-border-top {
+    border-top: none;
+    background-image: linear-gradient(var(--border-tertiary), var(--border-tertiary));
+    background-repeat: no-repeat;
+    background-size: 100vw 0.5px;
+    background-position: center top;
+  }
+
+  .section-border.section-border-top {
+    background-image:
+      linear-gradient(var(--border-tertiary), var(--border-tertiary)),
+      linear-gradient(var(--border-tertiary), var(--border-tertiary));
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100vw 0.5px, 100vw 0.5px;
+    background-position: center bottom, center top;
+  }
+}
+
 /* ============================================
    Lenis Smooth Scroll
    ============================================ */
