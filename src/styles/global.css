@@ -189,108 +189,128 @@ body::before {
   pointer-events: none;
 }
 
-/* Section border with intersection markers */
+/* Section border with intersection markers
+   The hairline (::before) always spans the true viewport width, at every
+   breakpoint, via the standard "break out of a centered container"
+   technique: left:50% + translateX(-50%) on a width:100vw box lands its
+   edges flush with the viewport regardless of how narrow the parent is.
+   This replaces a native border-bottom, which is capped at the parent's
+   own (max 1440px) width and can't reach past it on wider screens.
+   The corner markers (::after) stay exactly where they were — both drawn
+   on one pseudo-element via two background layers, since background-position
+   (unlike box-shadow's offset) accepts the percentage math their position
+   needs. */
 .section-border {
   position: relative;
-  border-bottom: 0.5px solid var(--border-tertiary);
 }
 
-.section-border::before,
+.section-border::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100vw;
+  height: 0.5px;
+  background: var(--border-tertiary);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .section-border::after {
   content: '';
   position: absolute;
+  left: 0;
+  right: 0;
   bottom: -2.5px;
-  width: 5px;
   height: 5px;
-  background: var(--border-tertiary);
   z-index: 11;
-  transform: translate(-50%, 50%);
+  pointer-events: none;
   display: none;
+  background-image:
+    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
+    linear-gradient(var(--border-tertiary), var(--border-tertiary));
+  background-repeat: no-repeat, no-repeat;
+  background-size: 5px 5px, 5px 5px;
+  background-position: 80px center, calc(100% - 80px) center;
 }
 
 @media (min-width: 1024px) {
-  .section-border::before,
   .section-border::after {
     display: block;
   }
 }
 
-.section-border::before {
-  left: 80px;
-  bottom: 0;
-}
-
-.section-border::after {
-  right: 80px;
-  bottom: 0;
-  transform: translate(50%, 50%);
-}
-
-/* Section border-top with intersection markers */
+/* Section border-top with intersection markers (mirror of the above) */
 .section-border-top {
   position: relative;
-  border-top: 0.5px solid var(--border-tertiary);
 }
 
-.section-border-top::before,
+.section-border-top::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 100vw;
+  height: 0.5px;
+  background: var(--border-tertiary);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .section-border-top::after {
   content: '';
   position: absolute;
-  top: 0;
-  width: 5px;
+  left: 0;
+  right: 0;
+  top: -2.5px;
   height: 5px;
-  background: var(--border-tertiary);
   z-index: 11;
-  transform: translate(-50%, -50%);
+  pointer-events: none;
   display: none;
+  background-image:
+    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
+    linear-gradient(var(--border-tertiary), var(--border-tertiary));
+  background-repeat: no-repeat, no-repeat;
+  background-size: 5px 5px, 5px 5px;
+  background-position: 80px center, calc(100% - 80px) center;
 }
 
 @media (min-width: 1024px) {
-  .section-border-top::before,
   .section-border-top::after {
     display: block;
   }
 }
 
-.section-border-top::before {
-  left: 80px;
+/* A single element carrying both classes (e.g. the last section on a page,
+   which needs a full-width line and markers on both its top and bottom
+   edge) needs its own rule: ::before/::after can each only resolve to one
+   rule's declarations, so the two individual rules above can't combine on
+   their own — this redeclares both pseudo-elements with two edges each. */
+.section-border.section-border-top::before {
+  top: 0;
+  bottom: 0;
+  height: auto;
+  background: none;
+  background-image:
+    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
+    linear-gradient(var(--border-tertiary), var(--border-tertiary));
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% 0.5px, 100% 0.5px;
+  background-position: top, bottom;
 }
 
-.section-border-top::after {
-  right: 80px;
-  transform: translate(50%, -50%);
-}
-
-/* Above the 1440px design width, extend the full-width hairline to the true
-   viewport edges (the page shell is centered via mx-auto, so a 100vw
-   background layer centered on the element lands flush with both edges).
-   The native border-bottom/border-top stays in place as-is — this layer is
-   additive, drawn on top of it, so the original 1440px-capped line is never
-   removed even if the background layer can't render for some reason.
-   Corner markers and page content are unaffected. */
-@media (min-width: 1440px) {
-  .section-border {
-    background-image: linear-gradient(var(--border-tertiary), var(--border-tertiary));
-    background-repeat: no-repeat;
-    background-size: 100vw 1px;
-    background-position: center bottom;
-  }
-
-  .section-border-top {
-    background-image: linear-gradient(var(--border-tertiary), var(--border-tertiary));
-    background-repeat: no-repeat;
-    background-size: 100vw 1px;
-    background-position: center top;
-  }
-
-  .section-border.section-border-top {
-    background-image:
-      linear-gradient(var(--border-tertiary), var(--border-tertiary)),
-      linear-gradient(var(--border-tertiary), var(--border-tertiary));
-    background-repeat: no-repeat, no-repeat;
-    background-size: 100vw 1px, 100vw 1px;
-    background-position: center bottom, center top;
-  }
+.section-border.section-border-top::after {
+  top: -2.5px;
+  bottom: -2.5px;
+  height: auto;
+  background-image:
+    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
+    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
+    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
+    linear-gradient(var(--border-tertiary), var(--border-tertiary));
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 5px 5px, 5px 5px, 5px 5px, 5px 5px;
+  background-position: 80px top, calc(100% - 80px) top, 80px bottom, calc(100% - 80px) bottom;
 }
 
 /* ============================================
