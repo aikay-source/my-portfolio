@@ -5,9 +5,10 @@ interface Props {
   image: string;
   tags: string[];
   slug: string;
+  imagePosition?: string;
 }
 
-const { name, title, image, tags, slug } = Astro.props;
+const { name, title, image, tags, slug, imagePosition = 'center' } = Astro.props;
 ---
 
 <a href={`/works/${slug}`} class="flex flex-col gap-[24px] items-start w-full group">
@@ -17,6 +18,7 @@ const { name, title, image, tags, slug } = Astro.props;
       src={image}
       alt={name}
       class="size-full object-cover project-card-image"
+      style={`object-position: ${imagePosition}`}
       loading="lazy"
     />
   </div>

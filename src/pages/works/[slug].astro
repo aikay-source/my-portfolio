@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
+import SelectedWorkItem from '../../components/SelectedWorkItem.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
+import Cta from '../../components/Cta.astro';
 import { projects, getProjectBySlug, getRelatedProjects } from '../../data/projects';
 
 const { slug } = Astro.params;
@@ -18,9 +19,9 @@ export function getStaticPaths() {
 ---
 
 <BaseLayout title={`${project.title} — Samuel Nwokolo`} description={project.summary.split('\n')[0].slice(0, 160)}>
-  <!-- Hero / Summary -->
+  <!-- Hero -->
   <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-    <div class="flex w-full max-w-[848px] flex-col items-start gap-[32px] md:gap-[64px]">
+    <div class="flex w-full max-w-[700px] flex-col items-start gap-[32px] md:gap-[48px]">
       <!-- Back Button -->
       <a href="/works" class="flex items-center justify-center">
         <div class="flex h-[24px] items-center justify-center gap-[8px]">
@@ -33,42 +34,42 @@ export function getStaticPaths() {
         </div>
       </a>
 
-      <!-- Heading + Summary -->
-      <div class="flex w-full flex-col items-start gap-[32px]">
-        <!-- Heading -->
-        <h1 class="w-full text-[28px] md:text-[40px] font-semibold leading-[36px] md:leading-[48px] tracking-[-2.2px] text-content-primary">
-          {project.title}
+      <div class="flex w-full flex-col items-start gap-[16px]">
+        <h1 class="w-full text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+          {project.name}
         </h1>
 
-        <!-- Summary Row -->
-        <div class="flex flex-col md:flex-row w-full items-start gap-[16px] md:justify-between">
-          <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
-            SUMMARY
-          </span>
+        <div class="flex w-full flex-col items-start gap-[24px]">
+          <p class="w-full text-[16px] leading-[24px] text-content-primary">
+            {project.summary}
+          </p>
 
-          <div class="flex w-full md:w-[617px] flex-col items-start gap-[24px]">
-            <p class="w-full whitespace-pre-line text-[16px] leading-[24px] text-content-secondary">
-              {project.summary}
-            </p>
+          <div class="flex w-full flex-col items-start gap-[24px]">
+            <div class="flex flex-col items-start">
+              <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
+                Role
+              </span>
+              <span class="text-[16px] leading-[24px] text-content-primary">
+                {project.role}
+              </span>
+            </div>
 
-            <div class="flex w-full flex-col items-start gap-[16px]">
-              <div class="flex flex-col items-start">
-                <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
-                  CONTRIBUTION
-                </span>
-                <span class="text-[16px] leading-[24px] text-content-primary">
-                  {project.contribution}
-                </span>
-              </div>
+            <div class="flex flex-col items-start">
+              <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
+                Tools
+              </span>
+              <span class="text-[16px] leading-[24px] text-content-primary">
+                {project.tools.join(', ')}
+              </span>
+            </div>
 
-              <div class="flex flex-col items-start">
-                <span class="font-mono text-[12px] font-semibold leading-[16px] text-content-tertiary">
-                  YEAR
-                </span>
-                <span class="text-[16px] leading-[24px] text-content-primary">
-                  {project.year}
-                </span>
-              </div>
+            <div class="flex flex-col items-start">
+              <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
+                Timeline
+              </span>
+              <span class="text-[16px] leading-[24px] text-content-primary">
+                {project.timeline}
+              </span>
             </div>
           </div>
         </div>
@@ -76,18 +77,203 @@ export function getStaticPaths() {
     </div>
   </section>
 
+  <!-- Detail filmstrip (only for projects with detail shots) -->
+  {project.filmstrip && (
+    <section class="content-divider py-[32px] md:py-[64px]">
+      <div class="relative left-1/2 w-screen -translate-x-1/2" role="region" aria-roledescription="carousel" aria-label={`${project.name} detail views`}>
+        <div
+          class="overflow-hidden focus:outline-none [@media(hover:hover)_and_(pointer:fine)]:cursor-none"
+          data-filmstrip-viewport
+          tabindex="0"
+        >
+          <div class="-ml-2 flex items-center touch-pan-y touch-pinch-zoom">
+            {project.filmstrip.map((src) => (
+              <div class="min-w-0 shrink-0 grow-0 pl-2">
+                <div class="h-[280px] md:h-[500px] opacity-40 transition-opacity duration-500 ease-out" data-filmstrip-slide>
+                  <img
+                    src={src}
+                    alt={`${project.name} detail view`}
+                    class="h-full w-auto object-contain select-none"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div
+          class="pointer-events-none fixed top-0 left-0 z-40 hidden [@media(hover:hover)_and_(pointer:fine)]:block"
+          data-filmstrip-cursor
+        >
+          <span class="block -translate-x-1/2 -translate-y-1/2 border border-[#616166] bg-[#131314] px-[12px] py-[4px] font-mono text-[14px] font-semibold uppercase text-white opacity-0 scale-90 transition-[opacity,scale] duration-200 ease-out">
+            Drag
+          </span>
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- See Also -->
-  <section class="section-border section-border-top flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-    <div class="flex w-full max-w-[848px] flex-col items-center gap-[32px]">
+  <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+    <div class="flex w-full max-w-[700px] flex-col items-start gap-[32px] px-[16px]">
       <div class="w-full">
         <SectionTitle title="See Also" />
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[32px] md:gap-y-[64px] w-full">
+      <div class="flex flex-col gap-[64px] items-start w-full">
         {relatedProjects.map((proj) => (
-          <ProjectCard {...proj} />
+          <SelectedWorkItem {...proj} />
         ))}
       </div>
     </div>
   </section>
+
+  <Cta />
 </BaseLayout>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+
+  function initFilmstrips() {
+    document.querySelectorAll<HTMLElement>('[data-filmstrip-viewport]').forEach((viewport) => {
+      if (viewport.dataset.emblaInitialized) return;
+      viewport.dataset.emblaInitialized = 'true';
+
+      const embla = EmblaCarousel(viewport, { align: 'center', containScroll: false, loop: true });
+
+      let isHovering = false;
+
+      function handleKeydown(e: KeyboardEvent) {
+        if (!isHovering && document.activeElement !== viewport) return;
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          embla.scrollPrev();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          embla.scrollNext();
+        }
+      }
+
+      viewport.addEventListener('pointerenter', () => { isHovering = true; });
+      viewport.addEventListener('pointerleave', () => { isHovering = false; });
+      viewport.addEventListener('pointerdown', () => { viewport.focus(); });
+      document.addEventListener('keydown', handleKeydown);
+
+      const slides = viewport.querySelectorAll<HTMLElement>('[data-filmstrip-slide]');
+      let rafId = 0;
+
+      type GifEntry = { img: HTMLImageElement; gifSrc: string; poster?: string; active: boolean };
+      const gifBySlide = new Map<HTMLElement, GifEntry>();
+      let focusedSlide: HTMLElement | null = null;
+
+      function syncGifForSlide(slide: HTMLElement, shouldPlay: boolean) {
+        const entry = gifBySlide.get(slide);
+        if (!entry) return;
+        if (shouldPlay && !entry.active) {
+          entry.img.src = entry.gifSrc;
+          entry.active = true;
+        } else if (!shouldPlay && entry.active && entry.poster) {
+          entry.img.src = entry.poster;
+          entry.active = false;
+        }
+      }
+
+      slides.forEach((slide) => {
+        const img = slide.querySelector<HTMLImageElement>('img');
+        const src = img?.getAttribute('src') ?? '';
+        if (!img || !src.toLowerCase().endsWith('.gif')) return;
+
+        const entry: GifEntry = { img, gifSrc: src, active: true };
+        gifBySlide.set(slide, entry);
+
+        function capturePoster() {
+          if (entry.poster || !img) return;
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return;
+          ctx.drawImage(img, 0, 0);
+          entry.poster = canvas.toDataURL('image/png');
+          syncGifForSlide(slide, slide === focusedSlide);
+        }
+
+        if (img.complete && img.naturalWidth > 0) {
+          capturePoster();
+        } else {
+          img.addEventListener('load', capturePoster, { once: true });
+        }
+      });
+
+      function updateOpacity() {
+        rafId = 0;
+        const viewportRect = viewport.getBoundingClientRect();
+        const centerX = viewportRect.left + viewportRect.width / 2;
+
+        let closestSlide: HTMLElement | null = null;
+        let closestDistance = Infinity;
+
+        slides.forEach((slide) => {
+          const slideRect = slide.getBoundingClientRect();
+          const slideCenterX = slideRect.left + slideRect.width / 2;
+          const distance = Math.abs(centerX - slideCenterX);
+          const normalized = Math.min(distance / (viewportRect.width / 2), 1);
+          const opacity = Math.max(1 - normalized * 0.6, 0.4);
+          slide.style.opacity = opacity.toFixed(2);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestSlide = slide;
+          }
+        });
+
+        if (gifBySlide.size > 0 && closestSlide !== focusedSlide) {
+          if (focusedSlide) syncGifForSlide(focusedSlide, false);
+          focusedSlide = closestSlide;
+          if (focusedSlide) syncGifForSlide(focusedSlide, true);
+        }
+      }
+
+      function scheduleOpacityUpdate() {
+        if (rafId) return;
+        rafId = requestAnimationFrame(updateOpacity);
+      }
+
+      embla.on('scroll', scheduleOpacityUpdate);
+      embla.on('select', scheduleOpacityUpdate);
+      embla.on('settle', scheduleOpacityUpdate);
+      embla.on('reInit', scheduleOpacityUpdate);
+      embla.on('init', scheduleOpacityUpdate);
+      scheduleOpacityUpdate();
+      setTimeout(updateOpacity, 300);
+
+      const cursor = viewport.parentElement?.querySelector<HTMLElement>('[data-filmstrip-cursor]');
+      const label = cursor?.querySelector<HTMLElement>('span');
+      if (!cursor || !label) return;
+
+      // Reparent to <body>: the region wrapper has a CSS transform (the
+      // full-bleed breakout), which makes it the containing block for any
+      // `position: fixed` descendant instead of the viewport. That desyncs
+      // this label from the real mouse position near the edges.
+      document.body.appendChild(cursor);
+
+      viewport.addEventListener('pointerenter', () => {
+        label.classList.remove('opacity-0', 'scale-90');
+        label.classList.add('opacity-100', 'scale-100');
+      });
+
+      viewport.addEventListener('pointermove', (e) => {
+        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      });
+
+      viewport.addEventListener('pointerleave', () => {
+        label.classList.add('opacity-0', 'scale-90');
+        label.classList.remove('opacity-100', 'scale-100');
+      });
+    });
+  }
+
+  initFilmstrips();
+  document.addEventListener('astro:after-swap', initFilmstrips);
+</script>
