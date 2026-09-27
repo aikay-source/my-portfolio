@@ -1,7 +1,9 @@
 ---
 import SectionTitle from './SectionTitle.astro';
 import SelectedWorkItem from './SelectedWorkItem.astro';
-import { projects } from '../data/projects';
+import { getProjectBySlug, FEATURED_SLUGS } from '../data/projects';
+
+const featuredProjects = FEATURED_SLUGS.map((slug) => getProjectBySlug(slug)!);
 ---
 
 <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px] w-full">
@@ -14,7 +16,7 @@ import { projects } from '../data/projects';
     <div class="flex flex-col gap-[32px] items-start w-full">
       <!-- Project list: single column, 64px gap -->
       <div class="flex flex-col gap-[64px] items-start w-full">
-        {projects.map((project) => (
+        {featuredProjects.map((project) => (
           <div class="w-full" data-scroll-reveal><SelectedWorkItem {...project} /></div>
         ))}
       </div>
