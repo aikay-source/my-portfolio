@@ -1,51 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
 import Experience from '../components/Experience.astro';
 import Cta from '../components/Cta.astro';
 ---
 
 <BaseLayout title="About — Samuel Nwokolo" description="Learn about Samuel Nwokolo, a product designer who works with founders and teams to create conversion-focused designs.">
-  <!-- Hero -->
-  <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-    <div class="flex w-full max-w-[848px] items-center gap-[16px]">
-      <div class="flex flex-col items-start gap-[4px]">
-        <h1 class="text-[24px] md:text-[32px] font-semibold leading-[32px] md:leading-[40px] tracking-[-2px] text-content-primary">
-          About me
-        </h1>
-        <p class="text-[16px] leading-[24px] text-content-tertiary">
-          Sit with your ambient ambition.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Bio -->
-  <section class="content-divider flex justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-    <div class="flex flex-col md:flex-row w-full max-w-[848px] items-center gap-[24px] md:gap-[16px]">
-      <!-- Profile Image -->
-      <div data-scroll-reveal class="relative w-full md:w-[400px] h-[300px] md:h-[400px] shrink-0 overflow-hidden">
-        <img
-          src="/images/about-profile.png"
-          alt="Samuel Nwokolo"
-          class="h-full w-full object-cover"
-        />
+  <!-- About -->
+  <section class="content-divider flex items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+    <div class="flex flex-col max-w-[700px] w-full px-[16px] items-start gap-[16px]">
+      <!-- Section Title (top) -->
+      <div data-scroll-reveal>
+        <SectionTitle title="About" />
       </div>
 
-      <!-- Text Content -->
-      <div data-scroll-reveal class="flex flex-1 flex-col items-start gap-[16px]">
-        <h2 class="w-full text-[22px] md:text-[28px] font-semibold leading-[30px] md:leading-[36px] tracking-[-1.7px] text-content-primary">
+      <!-- Content (below) -->
+      <div class="flex w-full md:w-[632px] flex-col items-start gap-[16px]" data-scroll-reveal>
+        <h1 class="sr-only">About</h1>
+
+        <div class="h-[150px] w-[150px] shrink-0 overflow-hidden">
+          <img
+            src="/images/about-profile.png"
+            alt="Samuel Nwokolo"
+            class="h-full w-full object-cover"
+          />
+        </div>
+
+        <h2 class="w-full text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
           I'm a designer who helps teams turn complex ideas into simple, usable products.
         </h2>
 
-        <div class="flex flex-col gap-[24px]">
-          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
-            I care about understanding how things work, but even more about making them work better for the people using them.
-          </p>
-
-          <p class="w-full text-[16px] leading-[24px] text-content-secondary">
-            When I'm not working, I'm at the gym or in the pool trying to swim better than last time. It resets me.
-          </p>
-        </div>
+        <p class="w-full text-[16px] leading-[24px] text-content-secondary">
+          I care about understanding how things work, but even more about making them work better for the people using them. When I'm not working, I'm at the gym or in the pool trying to swim better than last time.
+        </p>
 
         <!-- CTA Buttons -->
         <div class="flex items-center gap-[16px]">
