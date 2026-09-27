@@ -13,7 +13,7 @@ interface Props {
 const {
   title = 'Samuel Nwokolo — Product Designer',
   description = 'UX/Product Designer portfolio. I work with founders and product teams to turn messy ideas into clear, conversion-focused designs.',
-  ogImage = '/images/profile.png',
+  ogImage = '/images/og-image.png',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -40,6 +40,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
