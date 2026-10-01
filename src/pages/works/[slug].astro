@@ -36,7 +36,7 @@ export function getStaticPaths() {
 
       <div class="flex w-full flex-col items-start gap-[16px]">
         <h1 class="w-full text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
-          {project.name}
+          {project.title}
         </h1>
 
         <div class="flex w-full flex-col items-start gap-[24px]">
@@ -44,34 +44,56 @@ export function getStaticPaths() {
             {project.summary}
           </p>
 
-          <div class="flex w-full flex-col items-start gap-[24px]">
-            <div class="flex flex-col items-start">
-              <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
-                Role
-              </span>
-              <span class="text-[16px] leading-[24px] text-content-primary">
-                {project.role}
-              </span>
+          <div class="flex w-full flex-col items-start gap-[16px] md:gap-[24px]">
+            <div class="flex w-full flex-col items-start gap-[16px] md:flex-row md:items-center md:gap-[80px]">
+              <div class="flex flex-col items-start">
+                <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
+                  Role
+                </span>
+                <span class="text-[16px] leading-[24px] text-content-primary">
+                  {project.role}
+                </span>
+              </div>
+
+              <div class="flex flex-col items-start">
+                <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
+                  Tools
+                </span>
+                <span class="text-[16px] leading-[24px] text-content-primary">
+                  {project.tools.join(', ')}
+                </span>
+              </div>
+
+              <div class="flex flex-col items-start">
+                <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
+                  Timeline
+                </span>
+                <span class="text-[16px] leading-[24px] text-content-primary">
+                  {project.timeline}
+                </span>
+              </div>
             </div>
 
-            <div class="flex flex-col items-start">
-              <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
-                Tools
-              </span>
-              <span class="text-[16px] leading-[24px] text-content-primary">
-                {project.tools.join(', ')}
-              </span>
-            </div>
-
-            <div class="flex flex-col items-start">
-              <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
-                Timeline
-              </span>
-              <span class="text-[16px] leading-[24px] text-content-primary">
-                {project.timeline}
-              </span>
-            </div>
+            {project.team && (
+              <div class="flex flex-col items-start">
+                <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
+                  Team
+                </span>
+                <span class="text-[16px] leading-[24px] text-content-primary">
+                  {project.team}
+                </span>
+              </div>
+            )}
           </div>
+
+          {project.keyOutcomes && (
+            <div class="flex w-full items-stretch gap-[8px]">
+              <div class="w-[4px] shrink-0 bg-border-secondary"></div>
+              <p class="flex-1 text-[16px] leading-[24px] text-content-primary">
+                {project.keyOutcomes}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -113,6 +135,53 @@ export function getStaticPaths() {
       </div>
     </section>
   )}
+
+  <!-- Case study -->
+  {project.caseStudy && project.caseStudy.map((group) => (
+    <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
+      <div class="flex w-full max-w-[700px] flex-col items-start gap-[48px] px-[16px]">
+        {group.map((section) => (
+          <div class="flex w-full flex-col items-start gap-[16px]">
+            <SectionTitle title={section.label} />
+            <div class="flex w-full flex-col items-start gap-[24px]">
+              <h2 class="w-full text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+                {section.heading}
+              </h2>
+              {section.paragraphs.map((paragraph) => (
+                <p class="w-full text-[16px] leading-[24px] text-content-secondary">
+                  {paragraph}
+                </p>
+              ))}
+              {section.callout && (
+                <div class="flex w-full items-stretch gap-[8px]">
+                  <div class="w-[4px] shrink-0 bg-border-secondary"></div>
+                  <p class="flex-1 text-[16px] leading-[24px] text-content-primary">
+                    {section.callout}
+                  </p>
+                </div>
+              )}
+              {section.metrics && (
+                <div class="flex w-full flex-col items-start gap-[8px]">
+                  {section.metricsIntro && (
+                    <p class="w-full text-[16px] leading-[24px] text-content-secondary">
+                      {section.metricsIntro}
+                    </p>
+                  )}
+                  <ul class="flex w-full flex-col items-start gap-[4px] pl-[20px]">
+                    {section.metrics.map((metric) => (
+                      <li class="w-full list-disc text-[16px] leading-[24px] text-content-secondary">
+                        {metric}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
 
   <!-- See Also -->
   <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
