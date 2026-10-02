@@ -260,6 +260,37 @@ export const projects: Project[] = [
       '/images/projects/virally/filmstrip/slide-05.gif',
       '/images/projects/virally/filmstrip/slide-06.png',
     ],
+    caseStudy: [
+      [
+        {
+          label: 'The Problem',
+          paragraphs: [
+            'Artists and brands spend days searching for influencers manually, negotiating rates one by one, and coordinating content across platforms. Influencers have no central place to find campaigns that match their audience and niche.',
+            'Existing platforms like TikTok Creator Marketplace, Influencity, Upfluence, and Aspire all put the burden on brands to search for influencers. Influencers sit and wait. This creates a bottleneck: brands spend time filtering through thousands of profiles, and qualified influencers never see relevant opportunities.',
+          ],
+        },
+        {
+          label: 'Solution',
+          heading: 'Flipping the discovery model.',
+          paragraphs: [
+            'Instead of brands searching for influencers, influencers browse a campaign listing page and apply to campaigns that fit them. This removed the matching bottleneck from brands and gave influencers control over the work they take on.',
+            'Two campaign types support different brand needs. General campaigns are open to all eligible influencers, maximizing reach for things like hashtag challenges or product awareness pushes. Specific campaigns let brands invite handpicked influencers when quality control and brand alignment matter more than scale.',
+            'Every design decision came from auditing four competitor platforms. I had no user data and no ability to run usability tests. The product owner defined the core requirements. My job was translating those requirements into flows that made sense given what competitors had validated in the market.',
+          ],
+        },
+        {
+          label: 'Outcome',
+          paragraphs: [
+            'The platform is still in development, but the discovery model is ready to test with real users so there are no engagement metrics, no conversion data, and no user feedback to report.',
+          ],
+          metricsIntro: "What I'd measure first:",
+          metrics: [
+            "Campaign completion rate: the percentage of users who start creating a campaign and successfully publish it. This is the single metric that would reveal whether the creation flow works.",
+            'Application rate on general campaigns: how many influencers apply per published campaign, to tell us whether the listing model actually drives discovery.',
+          ],
+        },
+      ],
+    ],
   },
   {
     slug: 'soigne-living',
@@ -343,5 +374,17 @@ export function getRelatedProjects(currentSlug: string): Project[] {
   const candidates = projects.filter((p) => p.slug !== currentSlug && !p.archived);
   const nonFeatured = candidates.filter((p) => !FEATURED_SLUGS.includes(p.slug));
   const featured = candidates.filter((p) => FEATURED_SLUGS.includes(p.slug));
-  return [...nonFeatured, ...featured].slice(0, 3);
+
+  const needed = 3 - nonFeatured.length;
+  if (needed <= 0 || featured.length === 0) {
+    return nonFeatured.slice(0, 3);
+  }
+
+  // Rotate the featured fallback by the current project's position so every
+  // non-featured page doesn't all pad its "See Also" list with the same one.
+  const currentIndex = Math.max(projects.findIndex((p) => p.slug === currentSlug), 0);
+  const offset = currentIndex % featured.length;
+  const rotatedFeatured = [...featured.slice(offset), ...featured.slice(0, offset)];
+
+  return [...nonFeatured, ...rotatedFeatured].slice(0, 3);
 }

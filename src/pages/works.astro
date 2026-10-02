@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
-import SelectedWorkItem from '../components/SelectedWorkItem.astro';
 import ViewToggle from '../components/ViewToggle.astro';
+import ProjectViewPanels from '../components/ProjectViewPanels.astro';
 import { projects } from '../data/projects';
 
 const visibleProjects = projects.filter((project) => !project.archived);
@@ -20,31 +20,7 @@ const visibleProjects = projects.filter((project) => !project.archived);
         <ViewToggle />
       </div>
 
-      <!-- Grid view (images) -->
-      <div data-view-panel="grid" class="flex flex-col gap-[64px] items-start w-full">
-        {visibleProjects.map((project) => (
-          <div class="w-full" data-scroll-reveal data-view-item><SelectedWorkItem {...project} /></div>
-        ))}
-      </div>
-
-      <!-- List view (no images) -->
-      <div data-view-panel="list" class="hidden flex-col items-start w-full" data-scroll-reveal>
-        {visibleProjects.map((project) => (
-          <a href={`/works/${project.slug}`} data-view-item class="group flex w-full flex-col gap-[8px] border-b-[0.5px] border-border-secondary py-[16px]">
-            <div class="flex items-baseline justify-between gap-[16px] w-full">
-              <h3 class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
-                {project.name}
-              </h3>
-              <span class="shrink-0 font-mono text-[14px] leading-[20px] text-content-tertiary">
-                {project.year}
-              </span>
-            </div>
-            <p class="text-[16px] leading-[24px] text-content-secondary">
-              {project.title}
-            </p>
-          </a>
-        ))}
-      </div>
+      <ProjectViewPanels projects={visibleProjects} />
     </div>
   </section>
 </BaseLayout>

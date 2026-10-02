@@ -195,10 +195,20 @@ export function getStaticPaths() {
 <script>
   import EmblaCarousel from 'embla-carousel';
 
+  let cleanupFns: Array<() => void> = [];
+
+  function cleanupFilmstrips() {
+    cleanupFns.forEach((fn) => fn());
+    cleanupFns = [];
+  }
+
   function initFilmstrips() {
     document.querySelectorAll<HTMLElement>('[data-filmstrip-viewport]').forEach((viewport) => {
       if (viewport.dataset.emblaInitialized) return;
       viewport.dataset.emblaInitialized = 'true';
+
+      const controller = new AbortController();
+      const { signal } = controller;
 
       const embla = EmblaCarousel(viewport, { align: 'center', containScroll: false, loop: true });
 
@@ -215,10 +225,10 @@ export function getStaticPaths() {
         }
       }
 
-      viewport.addEventListener('pointerenter', () => { isHovering = true; });
-      viewport.addEventListener('pointerleave', () => { isHovering = false; });
-      viewport.addEventListener('pointerdown', () => { viewport.focus(); });
-      document.addEventListener('keydown', handleKeydown);
+      viewport.addEventListener('pointerenter', () => { isHovering = true; }, { signal });
+      viewport.addEventListener('pointerleave', () => { isHovering = false; }, { signal });
+      viewport.addEventListener('pointerdown', () => { viewport.focus(); }, { signal });
+      document.addEventListener('keydown', handleKeydown, { signal });
 
       const slides = viewport.querySelectorAll<HTMLElement>('[data-filmstrip-slide]');
       let rafId = 0;
@@ -271,13 +281,18 @@ export function getStaticPaths() {
         const viewportRect = viewport.getBoundingClientRect();
         const centerX = viewportRect.left + viewportRect.width / 2;
 
+        // Batch all reads (getBoundingClientRect) before any writes
+        // (style.opacity) so we don't force a layout recalc per slide.
+        const measurements = Array.from(slides).map((slide) => {
+          const slideRect = slide.getBoundingClientRect();
+          const slideCenterX = slideRect.left + slideRect.width / 2;
+          return { slide, distance: Math.abs(centerX - slideCenterX) };
+        });
+
         let closestSlide: HTMLElement | null = null;
         let closestDistance = Infinity;
 
-        slides.forEach((slide) => {
-          const slideRect = slide.getBoundingClientRect();
-          const slideCenterX = slideRect.left + slideRect.width / 2;
-          const distance = Math.abs(centerX - slideCenterX);
+        measurements.forEach(({ slide, distance }) => {
           const normalized = Math.min(distance / (viewportRect.width / 2), 1);
           const opacity = Math.max(1 - normalized * 0.6, 0.4);
           slide.style.opacity = opacity.toFixed(2);
@@ -306,34 +321,46 @@ export function getStaticPaths() {
       embla.on('reInit', scheduleOpacityUpdate);
       embla.on('init', scheduleOpacityUpdate);
       scheduleOpacityUpdate();
-      setTimeout(updateOpacity, 300);
+      const settleTimeoutId = setTimeout(updateOpacity, 300);
 
       const cursor = viewport.parentElement?.querySelector<HTMLElement>('[data-filmstrip-cursor]');
       const label = cursor?.querySelector<HTMLElement>('span');
-      if (!cursor || !label) return;
+      let reparentedCursor: HTMLElement | null = null;
 
-      // Reparent to <body>: the region wrapper has a CSS transform (the
-      // full-bleed breakout), which makes it the containing block for any
-      // `position: fixed` descendant instead of the viewport. That desyncs
-      // this label from the real mouse position near the edges.
-      document.body.appendChild(cursor);
+      if (cursor && label) {
+        // Reparent to <body>: the region wrapper has a CSS transform (the
+        // full-bleed breakout), which makes it the containing block for any
+        // `position: fixed` descendant instead of the viewport. That desyncs
+        // this label from the real mouse position near the edges.
+        document.body.appendChild(cursor);
+        reparentedCursor = cursor;
 
-      viewport.addEventListener('pointerenter', () => {
-        label.classList.remove('opacity-0', 'scale-90');
-        label.classList.add('opacity-100', 'scale-100');
-      });
+        viewport.addEventListener('pointerenter', () => {
+          label.classList.remove('opacity-0', 'scale-90');
+          label.classList.add('opacity-100', 'scale-100');
+        }, { signal });
 
-      viewport.addEventListener('pointermove', (e) => {
-        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      });
+        viewport.addEventListener('pointermove', (e) => {
+          cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+        }, { signal });
 
-      viewport.addEventListener('pointerleave', () => {
-        label.classList.add('opacity-0', 'scale-90');
-        label.classList.remove('opacity-100', 'scale-100');
+        viewport.addEventListener('pointerleave', () => {
+          label.classList.add('opacity-0', 'scale-90');
+          label.classList.remove('opacity-100', 'scale-100');
+        }, { signal });
+      }
+
+      cleanupFns.push(() => {
+        controller.abort();
+        clearTimeout(settleTimeoutId);
+        if (rafId) cancelAnimationFrame(rafId);
+        embla.destroy();
+        reparentedCursor?.remove();
       });
     });
   }
 
   initFilmstrips();
+  document.addEventListener('astro:before-swap', cleanupFilmstrips);
   document.addEventListener('astro:after-swap', initFilmstrips);
 </script>

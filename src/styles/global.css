@@ -250,79 +250,6 @@ body::before {
   }
 }
 
-/* Section border-top with intersection markers (mirror of the above) */
-.section-border-top {
-  position: relative;
-}
-
-.section-border-top::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 100vw;
-  height: 0.5px;
-  background: var(--border-tertiary);
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-.section-border-top::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -2.5px;
-  height: 5px;
-  z-index: 11;
-  pointer-events: none;
-  display: none;
-  background-image:
-    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
-    linear-gradient(var(--border-tertiary), var(--border-tertiary));
-  background-repeat: no-repeat, no-repeat;
-  background-size: 5px 5px, 5px 5px;
-  background-position: 80px center, calc(100% - 80px) center;
-}
-
-@media (min-width: 1024px) {
-  .section-border-top::after {
-    display: block;
-  }
-}
-
-/* A single element carrying both classes (e.g. the last section on a page,
-   which needs a full-width line and markers on both its top and bottom
-   edge) needs its own rule: ::before/::after can each only resolve to one
-   rule's declarations, so the two individual rules above can't combine on
-   their own — this redeclares both pseudo-elements with two edges each. */
-.section-border.section-border-top::before {
-  top: 0;
-  bottom: 0;
-  height: auto;
-  background: none;
-  background-image:
-    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
-    linear-gradient(var(--border-tertiary), var(--border-tertiary));
-  background-repeat: no-repeat, no-repeat;
-  background-size: 100% 0.5px, 100% 0.5px;
-  background-position: top, bottom;
-}
-
-.section-border.section-border-top::after {
-  top: -2.5px;
-  bottom: -2.5px;
-  height: auto;
-  background-image:
-    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
-    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
-    linear-gradient(var(--border-tertiary), var(--border-tertiary)),
-    linear-gradient(var(--border-tertiary), var(--border-tertiary));
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-  background-size: 5px 5px, 5px 5px, 5px 5px, 5px 5px;
-  background-position: 80px top, calc(100% - 80px) top, 80px bottom, calc(100% - 80px) bottom;
-}
-
 /* ============================================
    Lenis Smooth Scroll
    ============================================ */
@@ -522,6 +449,39 @@ a:active .project-card-image {
 @keyframes fadeOut {
   from { opacity: 1; }
   to { opacity: 0; }
+}
+
+/* ============================================
+   Theme Toggle — View Transition Wipe
+   Scoped to html.vt-theme so it never affects
+   Astro's page-navigation view transitions above.
+   ============================================ */
+
+:root.vt-theme::view-transition-group(root) {
+  animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+:root.vt-theme::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+:root.vt-theme::view-transition-new(root) {
+  animation: theme-wipe 0.65s forwards;
+  clip-path: inset(0 0 100% 0);
+  z-index: 1;
+}
+
+@keyframes theme-wipe {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root.vt-theme::view-transition-old(root),
+  :root.vt-theme::view-transition-new(root) {
+    animation: none !important;
+  }
 }
 
 /* ============================================

@@ -4,18 +4,18 @@ import SectionTitle from '../components/SectionTitle.astro';
 import GalleryCard from '../components/GalleryCard.astro';
 
 const galleryItems = [
-  { category: 'Product Design', image: '/images/gallery/envoice login screen.png' },
-  { category: 'Product Design', image: '/images/gallery/envoice dashboard.png' },
-  { category: 'Web Design', image: '/images/gallery/grind_hero.png' },
-  { category: 'Web Design', image: '/images/gallery/filmo_hero.png' },
-  { category: 'App Design', image: '/images/gallery/mobile_app_exploration.png' },
-  { category: 'Product Design', image: '/images/gallery/quickteller_redesign.png' },
-  { category: 'Web Design', image: '/images/gallery/evolvee.png' },
-  { category: 'Product Design', image: '/images/gallery/productivity_dashboard.png' },
-  { category: 'Product Design', image: '/images/gallery/mint_dashboard.png' },
-  { category: 'Web Design', image: '/images/gallery/hero_exploration.png' },
-  { category: 'Web Design', image: '/images/gallery/accel234.png' },
-  { category: 'Web Design', image: '/images/gallery/housing.co_landing_page.png' },
+  { category: 'Product Design', title: 'Envoice login screen', image: '/images/gallery/envoice login screen.png' },
+  { category: 'Product Design', title: 'Envoice dashboard', image: '/images/gallery/envoice dashboard.png' },
+  { category: 'Web Design', title: 'Grind hero section', image: '/images/gallery/grind_hero.png' },
+  { category: 'Web Design', title: 'Filmo hero section', image: '/images/gallery/filmo_hero.png' },
+  { category: 'App Design', title: 'Mobile app exploration', image: '/images/gallery/mobile_app_exploration.png' },
+  { category: 'Product Design', title: 'Quickteller redesign', image: '/images/gallery/quickteller_redesign.png' },
+  { category: 'Web Design', title: 'Evolvee', image: '/images/gallery/evolvee.png' },
+  { category: 'Product Design', title: 'Productivity dashboard', image: '/images/gallery/productivity_dashboard.png' },
+  { category: 'Product Design', title: 'Mint dashboard', image: '/images/gallery/mint_dashboard.png' },
+  { category: 'Web Design', title: 'Hero section exploration', image: '/images/gallery/hero_exploration.png' },
+  { category: 'Web Design', title: 'Accel', image: '/images/gallery/accel234.png' },
+  { category: 'Web Design', title: 'Housing.co landing page', image: '/images/gallery/housing.co_landing_page.png' },
 ];
 ---
 
@@ -27,7 +27,7 @@ const galleryItems = [
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[32px] md:gap-x-[16px] md:gap-y-[48px]">
         {galleryItems.map((item) => (
-          <div data-scroll-reveal><GalleryCard category={item.category} image={item.image} /></div>
+          <div data-scroll-reveal><GalleryCard category={item.category} title={item.title} image={item.image} /></div>
         ))}
       </div>
     </div>
