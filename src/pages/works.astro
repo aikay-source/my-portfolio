@@ -2,7 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import SelectedWorkItem from '../components/SelectedWorkItem.astro';
+import ViewToggle from '../components/ViewToggle.astro';
 import { projects } from '../data/projects';
+
+const visibleProjects = projects.filter((project) => !project.archived);
 ---
 
 <BaseLayout title="Works — Samuel Nwokolo" description="Selected works by Samuel Nwokolo, a product designer focused on usability and delight.">
@@ -11,13 +14,35 @@ import { projects } from '../data/projects';
   <!-- Selected Works -->
   <section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
     <div class="flex flex-col gap-[32px] items-center max-w-[700px] w-full px-[16px]">
-      <div class="w-full" data-scroll-reveal>
+      <!-- Section Title + View Toggle -->
+      <div class="flex w-full items-end justify-between gap-[16px]" data-scroll-reveal>
         <SectionTitle title="Selected Works" />
+        <ViewToggle />
       </div>
 
-      <div class="flex flex-col gap-[64px] items-start w-full">
-        {projects.map((project) => (
-          <div class="w-full" data-scroll-reveal><SelectedWorkItem {...project} /></div>
+      <!-- Grid view (images) -->
+      <div data-view-panel="grid" class="flex flex-col gap-[64px] items-start w-full">
+        {visibleProjects.map((project) => (
+          <div class="w-full" data-scroll-reveal data-view-item><SelectedWorkItem {...project} /></div>
+        ))}
+      </div>
+
+      <!-- List view (no images) -->
+      <div data-view-panel="list" class="hidden flex-col items-start w-full" data-scroll-reveal>
+        {visibleProjects.map((project) => (
+          <a href={`/works/${project.slug}`} data-view-item class="group flex w-full flex-col gap-[8px] border-b-[0.5px] border-border-secondary py-[16px]">
+            <div class="flex items-baseline justify-between gap-[16px] w-full">
+              <h3 class="text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+                {project.name}
+              </h3>
+              <span class="shrink-0 font-mono text-[14px] leading-[20px] text-content-tertiary">
+                {project.year}
+              </span>
+            </div>
+            <p class="text-[16px] leading-[24px] text-content-secondary">
+              {project.title}
+            </p>
+          </a>
         ))}
       </div>
     </div>

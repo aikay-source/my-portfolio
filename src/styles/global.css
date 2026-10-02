@@ -139,6 +139,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Prevent orphaned words: balance short heading lines, and let paragraphs
+   use the browser's orphan-avoiding line-breaking where supported. */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
 ::selection {
   background-color: var(--content-primary);
   color: var(--bg-primary);
@@ -534,4 +544,48 @@ a:active .project-card-image {
   transform: translateY(0);
   filter: blur(0px);
   pointer-events: auto;
+}
+
+/* ============================================
+   View Toggle (Grid / List) Transition
+   ============================================ */
+
+[data-view-panel] {
+  transition: opacity 0.18s cubic-bezier(0.7, 0, 0.84, 0),
+              transform 0.18s cubic-bezier(0.7, 0, 0.84, 0),
+              filter 0.18s cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+[data-view-panel].view-panel-exit {
+  opacity: 0;
+  transform: translateY(-6px);
+  filter: blur(3px);
+}
+
+@keyframes viewItemEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+[data-view-item].view-item-enter {
+  animation: viewItemEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-view-panel].view-panel-exit,
+  [data-view-item].view-item-enter {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
 }

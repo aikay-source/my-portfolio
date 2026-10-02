@@ -44,6 +44,15 @@ export function getStaticPaths() {
             {project.summary}
           </p>
 
+          {project.keyOutcomes && (
+            <div class="flex w-full items-stretch gap-[8px]">
+              <div class="w-[4px] shrink-0 bg-border-secondary"></div>
+              <p class="flex-1 text-[16px] leading-[24px] text-content-primary">
+                {project.keyOutcomes}
+              </p>
+            </div>
+          )}
+
           <div class="flex w-full flex-col items-start gap-[16px] md:gap-[24px]">
             <div class="flex w-full flex-col items-start gap-[16px] md:flex-row md:items-center md:gap-[80px]">
               <div class="flex flex-col items-start">
@@ -73,27 +82,7 @@ export function getStaticPaths() {
                 </span>
               </div>
             </div>
-
-            {project.team && (
-              <div class="flex flex-col items-start">
-                <span class="font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary">
-                  Team
-                </span>
-                <span class="text-[16px] leading-[24px] text-content-primary">
-                  {project.team}
-                </span>
-              </div>
-            )}
           </div>
-
-          {project.keyOutcomes && (
-            <div class="flex w-full items-stretch gap-[8px]">
-              <div class="w-[4px] shrink-0 bg-border-secondary"></div>
-              <p class="flex-1 text-[16px] leading-[24px] text-content-primary">
-                {project.keyOutcomes}
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -144,9 +133,11 @@ export function getStaticPaths() {
           <div class="flex w-full flex-col items-start gap-[16px]">
             <SectionTitle title={section.label} />
             <div class="flex w-full flex-col items-start gap-[24px]">
-              <h2 class="w-full text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
-                {section.heading}
-              </h2>
+              {section.heading && (
+                <h2 class="w-full text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+                  {section.heading}
+                </h2>
+              )}
               {section.paragraphs.map((paragraph) => (
                 <p class="w-full text-[16px] leading-[24px] text-content-secondary">
                   {paragraph}

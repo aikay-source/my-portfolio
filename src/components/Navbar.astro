@@ -11,79 +11,69 @@
     </a>
   </div>
 
-  <!-- Center Nav Links (hidden on mobile) -->
-  <nav class="load-animate load-animate-delay-2 hidden md:flex items-start gap-[16px]">
-    <a href="/works" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
-      WORK
-    </a>
-    <a href="/about" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
-      ABOUT
-    </a>
-    <a href="/gallery" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
-      GALLERY
-    </a>
-    <a href="/resume" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
-      RESUME
-    </a>
-  </nav>
+  <!-- Right: Nav Links + Toggle -->
+  <div class="load-animate load-animate-delay-2 flex items-center gap-[24px] md:gap-[32px] px-0 lg:px-[16px]">
+    <!-- Nav Links (hidden on mobile) -->
+    <nav class="hidden md:flex items-start gap-[16px]">
+      <a href="/works" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        WORK
+      </a>
+      <a href="/about" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        ABOUT
+      </a>
+      <a href="/gallery" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        GALLERY
+      </a>
+      <a href="/resume" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        RESUME
+      </a>
+    </nav>
 
-  <!-- Right: Toggle + Contact Button -->
-  <div class="load-animate load-animate-delay-3 flex items-center gap-[8px] md:gap-[16px] px-0 lg:px-[16px]">
-    <!-- Dark/Light Toggle -->
-    <div class="flex items-center gap-[8px] rounded-[100px] border border-border-secondary bg-[var(--surface-l0)] p-[4px]">
+    <div class="flex items-center gap-[8px] md:gap-[16px]">
+      <!-- Dark/Light Toggle -->
+      <div class="flex items-center gap-[8px] rounded-[100px] border border-border-secondary bg-[var(--surface-l0)] p-[4px]">
+        <button
+          id="theme-light-btn"
+          type="button"
+          class="flex items-center rounded-[100px] p-[4px] transition-colors"
+          aria-label="Switch to light mode"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="3.33" fill="currentColor" />
+            <rect x="7.33" y="1" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
+            <rect x="7.33" y="12.33" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
+            <rect x="12.33" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
+            <rect x="1" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
+            <rect x="11.77" y="2.82" width="1.33" height="2.67" rx="0.67" transform="rotate(45 11.77 2.82)" fill="currentColor" />
+            <rect x="3.28" y="11.31" width="1.33" height="2.67" rx="0.67" transform="rotate(45 3.28 11.31)" fill="currentColor" />
+            <rect x="13.18" y="11.77" width="1.33" height="2.67" rx="0.67" transform="rotate(135 13.18 11.77)" fill="currentColor" />
+            <rect x="4.69" y="3.28" width="1.33" height="2.67" rx="0.67" transform="rotate(135 4.69 3.28)" fill="currentColor" />
+          </svg>
+        </button>
+        <button
+          id="theme-dark-btn"
+          type="button"
+          class="flex items-center rounded-[100px] bg-surface-l2 p-[4px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.08)] transition-colors"
+          aria-label="Switch to dark mode"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 9.27A6 6 0 0 1 6.73 2 6 6 0 1 0 14 9.27Z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
       <button
-        id="theme-light-btn"
+        id="mobile-menu-btn"
         type="button"
-        class="flex items-center rounded-[100px] p-[4px] transition-colors"
-        aria-label="Switch to light mode"
+        class="flex md:hidden items-center justify-center p-[4px] text-content-primary"
+        aria-label="Toggle menu"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="8" cy="8" r="3.33" fill="currentColor" />
-          <rect x="7.33" y="1" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
-          <rect x="7.33" y="12.33" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
-          <rect x="12.33" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
-          <rect x="1" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
-          <rect x="11.77" y="2.82" width="1.33" height="2.67" rx="0.67" transform="rotate(45 11.77 2.82)" fill="currentColor" />
-          <rect x="3.28" y="11.31" width="1.33" height="2.67" rx="0.67" transform="rotate(45 3.28 11.31)" fill="currentColor" />
-          <rect x="13.18" y="11.77" width="1.33" height="2.67" rx="0.67" transform="rotate(135 13.18 11.77)" fill="currentColor" />
-          <rect x="4.69" y="3.28" width="1.33" height="2.67" rx="0.67" transform="rotate(135 4.69 3.28)" fill="currentColor" />
-        </svg>
-      </button>
-      <button
-        id="theme-dark-btn"
-        type="button"
-        class="flex items-center rounded-[100px] bg-surface-l2 p-[4px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.08)] transition-colors"
-        aria-label="Switch to dark mode"
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 9.27A6 6 0 0 1 6.73 2 6 6 0 1 0 14 9.27Z" fill="currentColor" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </div>
-
-    <!-- Mobile Menu Button -->
-    <button
-      id="mobile-menu-btn"
-      type="button"
-      class="flex md:hidden items-center justify-center p-[4px] text-content-primary"
-      aria-label="Toggle menu"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
-    <!-- Contact Button (hidden on mobile) -->
-    <a
-      href="mailto:nwokoloikem@gmail.com"
-      class="btn-hover hidden md:flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]"
-    >
-      <span class="flex items-center justify-center px-[4px]">
-        <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
-          CONTACT
-        </span>
-      </span>
-    </a>
   </div>
 </header>
 
@@ -141,7 +131,7 @@
     </div>
   </div>
 
-  <!-- Nav links + Contact button -->
+  <!-- Nav links -->
   <div class="flex flex-col gap-[16px] px-[16px] py-[40px]">
     <nav class="flex flex-col items-start">
       <a href="/works" class="w-full py-[16px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">WORK</a>
@@ -149,9 +139,6 @@
       <a href="/gallery" class="w-full py-[16px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">GALLERY</a>
       <a href="/resume" class="w-full py-[16px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">RESUME</a>
     </nav>
-    <a href="mailto:nwokoloikem@gmail.com" class="btn-hover flex w-full items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]">
-      <span class="px-[4px] font-mono text-[14px] font-semibold leading-[20px] text-content-primary">CONTACT</span>
-    </a>
   </div>
 </div>
 
