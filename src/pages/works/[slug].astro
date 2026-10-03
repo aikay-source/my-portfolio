@@ -99,12 +99,12 @@ export function getStaticPaths() {
         >
           <div class="-ml-2 flex items-center touch-pan-y touch-pinch-zoom">
             {project.filmstrip.map((src) => (
-              <div class="min-w-0 shrink-0 grow-0 pl-2">
+              <div class="min-w-0 shrink-0 grow-0 max-w-[86vw] pl-2 md:max-w-none">
                 <div class="h-[280px] md:h-[500px] opacity-40 transition-opacity duration-500 ease-out" data-filmstrip-slide>
                   <img
                     src={src}
                     alt={`${project.name} detail view`}
-                    class="h-full w-auto object-contain select-none"
+                    class="h-full w-auto max-w-full object-contain select-none"
                     loading="lazy"
                   />
                 </div>
@@ -128,7 +128,7 @@ export function getStaticPaths() {
   <!-- Case study -->
   {project.caseStudy && project.caseStudy.map((group) => (
     <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-      <div class="flex w-full max-w-[700px] flex-col items-start gap-[48px] px-[16px]">
+      <div class="flex w-full max-w-[700px] flex-col items-start gap-[48px]">
         {group.map((section) => (
           <div class="flex w-full flex-col items-start gap-[16px]">
             <SectionTitle title={section.label} />
@@ -176,7 +176,7 @@ export function getStaticPaths() {
 
   <!-- See Also -->
   <section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-    <div class="flex w-full max-w-[700px] flex-col items-start gap-[32px] px-[16px]">
+    <div class="flex w-full max-w-[700px] flex-col items-start gap-[32px]">
       <div class="w-full">
         <SectionTitle title="See Also" />
       </div>

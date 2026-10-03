@@ -5,10 +5,10 @@ interface Props {
   class?: string;
 }
 
-const { email, label = 'Email me at', class: className = '' } = Astro.props;
+const { email, label = 'Email me at', class: className = 'inline-flex' } = Astro.props;
 ---
 
-<p class:list={['inline-flex flex-wrap items-center text-[16px] leading-[24px] text-content-tertiary', className]}>
+<p class:list={['flex-wrap items-center text-[16px] leading-[24px] text-content-tertiary', className]}>
   {label}
   <span class="group inline-flex items-center pl-[4px]">
     <button
