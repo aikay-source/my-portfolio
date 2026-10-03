@@ -11,76 +11,86 @@
     </a>
   </div>
 
-  <!-- Center Nav Links (hidden on mobile) -->
-  <nav class="load-animate load-animate-delay-2 hidden md:flex items-start gap-[16px]">
-    <a href="/works" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
-      WORK
-    </a>
-    <a href="/about" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
-      ABOUT
-    </a>
-    <a href="/resume" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
-      RESUME
-    </a>
-  </nav>
+  <!-- Right: Nav Links + Toggle -->
+  <div class="load-animate load-animate-delay-2 flex items-center gap-[24px] md:gap-[32px] px-0 lg:px-[16px]">
+    <!-- Nav Links (hidden on mobile) -->
+    <nav class="hidden md:flex items-start gap-[16px]">
+      <a href="/works" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        WORK
+      </a>
+      <a href="/about" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        ABOUT
+      </a>
+      <a href="/gallery" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        GALLERY
+      </a>
+      <a href="/resume" class="nav-link font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">
+        RESUME
+      </a>
+    </nav>
 
-  <!-- Right: Toggle + Contact Button -->
-  <div class="load-animate load-animate-delay-3 flex items-center gap-[8px] md:gap-[16px] px-0 lg:px-[16px]">
-    <!-- Dark/Light Toggle -->
-    <div class="flex items-center gap-[8px] rounded-[100px] border border-border-secondary bg-[var(--surface-l0)] p-[4px]">
+    <div class="flex items-center gap-[8px] md:gap-[16px]">
+      <!-- Dark/Light Toggle -->
+      <div data-no-click-sound class="flex items-center gap-[8px] rounded-[100px] border border-border-secondary bg-[var(--surface-l0)] p-[4px]">
+        <button
+          id="theme-light-btn"
+          type="button"
+          class="flex items-center rounded-[100px] p-[4px] transition-colors"
+          aria-label="Switch to light mode"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="3.33" fill="currentColor" />
+            <rect x="7.33" y="1" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
+            <rect x="7.33" y="12.33" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
+            <rect x="12.33" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
+            <rect x="1" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
+            <rect x="11.77" y="2.82" width="1.33" height="2.67" rx="0.67" transform="rotate(45 11.77 2.82)" fill="currentColor" />
+            <rect x="3.28" y="11.31" width="1.33" height="2.67" rx="0.67" transform="rotate(45 3.28 11.31)" fill="currentColor" />
+            <rect x="13.18" y="11.77" width="1.33" height="2.67" rx="0.67" transform="rotate(135 13.18 11.77)" fill="currentColor" />
+            <rect x="4.69" y="3.28" width="1.33" height="2.67" rx="0.67" transform="rotate(135 4.69 3.28)" fill="currentColor" />
+          </svg>
+        </button>
+        <button
+          id="theme-dark-btn"
+          type="button"
+          class="flex items-center rounded-[100px] bg-surface-l2 p-[4px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.08)] transition-colors"
+          aria-label="Switch to dark mode"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 9.27A6 6 0 0 1 6.73 2 6 6 0 1 0 14 9.27Z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Sound Toggle -->
       <button
-        id="theme-light-btn"
+        id="sound-toggle-btn"
         type="button"
-        class="flex items-center rounded-[100px] p-[4px] transition-colors"
-        aria-label="Switch to light mode"
+        data-no-click-sound
+        aria-label="Mute sound"
+        aria-pressed="false"
+        class="flex items-center justify-center p-[4px] text-content-tertiary transition-colors hover:text-content-primary"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="8" cy="8" r="3.33" fill="currentColor" />
-          <rect x="7.33" y="1" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
-          <rect x="7.33" y="12.33" width="1.33" height="2.67" rx="0.67" fill="currentColor" />
-          <rect x="12.33" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
-          <rect x="1" y="7.33" width="2.67" height="1.33" rx="0.67" fill="currentColor" />
-          <rect x="11.77" y="2.82" width="1.33" height="2.67" rx="0.67" transform="rotate(45 11.77 2.82)" fill="currentColor" />
-          <rect x="3.28" y="11.31" width="1.33" height="2.67" rx="0.67" transform="rotate(45 3.28 11.31)" fill="currentColor" />
-          <rect x="13.18" y="11.77" width="1.33" height="2.67" rx="0.67" transform="rotate(135 13.18 11.77)" fill="currentColor" />
-          <rect x="4.69" y="3.28" width="1.33" height="2.67" rx="0.67" transform="rotate(135 4.69 3.28)" fill="currentColor" />
+        <svg class="sound-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+        </svg>
+        <svg class="sound-icon-off hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
         </svg>
       </button>
+
+      <!-- Mobile Menu Button -->
       <button
-        id="theme-dark-btn"
+        id="mobile-menu-btn"
         type="button"
-        class="flex items-center rounded-[100px] bg-surface-l2 p-[4px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.08)] transition-colors"
-        aria-label="Switch to dark mode"
+        class="flex md:hidden items-center justify-center p-[4px] text-content-primary"
+        aria-label="Toggle menu"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 9.27A6 6 0 0 1 6.73 2 6 6 0 1 0 14 9.27Z" fill="currentColor" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </div>
-
-    <!-- Mobile Menu Button -->
-    <button
-      id="mobile-menu-btn"
-      type="button"
-      class="flex md:hidden items-center justify-center p-[4px] text-content-primary"
-      aria-label="Toggle menu"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
-    <!-- Contact Button (hidden on mobile) -->
-    <a
-      href="mailto:nwokoloikem@gmail.com"
-      class="btn-hover hidden md:flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]"
-    >
-      <span class="flex items-center justify-center px-[4px]">
-        <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
-          CONTACT
-        </span>
-      </span>
-    </a>
   </div>
 </header>
 
@@ -95,7 +105,7 @@
     </a>
     <div class="flex items-center gap-[8px]">
       <!-- Toggle in menu header -->
-      <div class="flex items-center gap-[8px] rounded-[100px] border border-border-secondary bg-[var(--surface-l0)] p-[4px]">
+      <div data-no-click-sound class="flex items-center gap-[8px] rounded-[100px] border border-border-secondary bg-[var(--surface-l0)] p-[4px]">
         <button
           id="menu-theme-light-btn"
           type="button"
@@ -125,6 +135,24 @@
           </svg>
         </button>
       </div>
+
+      <!-- Sound Toggle -->
+      <button
+        id="menu-sound-toggle-btn"
+        type="button"
+        data-no-click-sound
+        aria-label="Mute sound"
+        aria-pressed="false"
+        class="flex items-center justify-center p-[4px] text-content-tertiary transition-colors hover:text-content-primary"
+      >
+        <svg class="sound-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+        </svg>
+        <svg class="sound-icon-off hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+        </svg>
+      </button>
+
       <button
         id="mobile-menu-close"
         type="button"
@@ -138,20 +166,20 @@
     </div>
   </div>
 
-  <!-- Nav links + Contact button -->
+  <!-- Nav links -->
   <div class="flex flex-col gap-[16px] px-[16px] py-[40px]">
     <nav class="flex flex-col items-start">
       <a href="/works" class="w-full py-[16px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">WORK</a>
       <a href="/about" class="w-full py-[16px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">ABOUT</a>
+      <a href="/gallery" class="w-full py-[16px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">GALLERY</a>
       <a href="/resume" class="w-full py-[16px] font-mono text-[14px] font-semibold leading-[20px] text-content-tertiary">RESUME</a>
     </nav>
-    <a href="mailto:nwokoloikem@gmail.com" class="btn-hover flex w-full items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px]">
-      <span class="px-[4px] font-mono text-[14px] font-semibold leading-[20px] text-content-primary">CONTACT</span>
-    </a>
   </div>
 </div>
 
 <script>
+  import { playToggleChime, playClickSound, isSoundMuted, setSoundMuted } from '../scripts/sound';
+
   function initThemeToggle() {
     const lightBtn = document.getElementById('theme-light-btn');
     const darkBtn = document.getElementById('theme-dark-btn');
@@ -160,7 +188,7 @@
 
     const shadowClass = 'shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.08)]';
 
-    function setTheme(theme: string) {
+    function applyTheme(theme: string) {
       document.documentElement.classList.add('no-transitions');
       if (theme === 'light') {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -173,6 +201,27 @@
         requestAnimationFrame(() => {
           document.documentElement.classList.remove('no-transitions');
         });
+      });
+    }
+
+    function setTheme(theme: string) {
+      const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      if (theme === current) return;
+
+      playToggleChime(theme === 'light');
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const canAnimate = 'startViewTransition' in document && !prefersReducedMotion;
+
+      if (!canAnimate) {
+        applyTheme(theme);
+        return;
+      }
+
+      document.documentElement.classList.add('vt-theme');
+      const transition = (document as unknown as { startViewTransition: (cb: () => void) => { finished: Promise<void> } }).startViewTransition(() => applyTheme(theme));
+      transition.finished.finally(() => {
+        document.documentElement.classList.remove('vt-theme');
       });
     }
 
@@ -201,6 +250,36 @@
 
     const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
     updateToggleUI(current);
+  }
+
+  function initSoundToggle() {
+    const buttons = [
+      document.getElementById('sound-toggle-btn'),
+      document.getElementById('menu-sound-toggle-btn'),
+    ].filter((el): el is HTMLButtonElement => el !== null);
+    if (!buttons.length) return;
+
+    function updateIcons(muted: boolean) {
+      buttons.forEach((btn) => {
+        btn.querySelector('.sound-icon-on')?.classList.toggle('hidden', muted);
+        btn.querySelector('.sound-icon-off')?.classList.toggle('hidden', !muted);
+        btn.setAttribute('aria-label', muted ? 'Unmute sound' : 'Mute sound');
+        btn.setAttribute('aria-pressed', String(muted));
+      });
+    }
+
+    buttons.forEach((btn) => {
+      if (btn.dataset.soundToggleBound) return;
+      btn.dataset.soundToggleBound = 'true';
+      btn.addEventListener('click', () => {
+        const next = !isSoundMuted();
+        setSoundMuted(next);
+        updateIcons(next);
+        if (!next) playClickSound();
+      });
+    });
+
+    updateIcons(isSoundMuted());
   }
 
   function initMobileMenu() {
@@ -236,9 +315,11 @@
   }
 
   initThemeToggle();
+  initSoundToggle();
   initMobileMenu();
   document.addEventListener('astro:after-swap', () => {
     initThemeToggle();
+    initSoundToggle();
     initMobileMenu();
   });
 </script>

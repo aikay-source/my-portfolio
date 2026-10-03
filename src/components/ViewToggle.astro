@@ -1,0 +1,123 @@
+---
+---
+
+<!-- View Toggle -->
+<div class="flex items-center gap-[8px]">
+  <button
+    type="button"
+    data-view-btn="grid"
+    class="flex items-center justify-center p-[4px] text-content-primary transition-colors active:scale-90"
+    aria-label="Switch to grid view"
+    aria-pressed="true"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" />
+      <rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" />
+      <rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" />
+      <rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" />
+    </svg>
+  </button>
+  <button
+    type="button"
+    data-view-btn="list"
+    class="flex items-center justify-center p-[4px] text-content-tertiary transition-colors active:scale-90"
+    aria-label="Switch to list view"
+    aria-pressed="false"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="2.5" width="14" height="1.5" rx="0.75" fill="currentColor" />
+      <rect x="1" y="7.25" width="14" height="1.5" rx="0.75" fill="currentColor" />
+      <rect x="1" y="12" width="14" height="1.5" rx="0.75" fill="currentColor" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  const EXIT_MS = 180;
+  const ENTER_MS = 400;
+  const STAGGER_MS = 30;
+  const MAX_STAGGER_MS = 150;
+
+  function revealInstantly(el: HTMLElement) {
+    if (el.hasAttribute('data-scroll-reveal') && !el.classList.contains('revealed')) {
+      el.style.transition = 'none';
+      el.classList.add('revealed');
+      void el.offsetHeight;
+      el.style.transition = '';
+    }
+  }
+
+  function initWorkViewToggle() {
+    document.querySelectorAll<HTMLElement>('[data-view-panel="grid"]').forEach((gridPanel) => {
+      const section = gridPanel.closest('section');
+      if (!section) return;
+
+      const buttons = section.querySelectorAll<HTMLButtonElement>('[data-view-btn]');
+      const panels = section.querySelectorAll<HTMLElement>('[data-view-panel]');
+
+      function setActiveButtons(view: string) {
+        buttons.forEach((btn) => {
+          const isActive = btn.dataset.viewBtn === view;
+          btn.classList.toggle('text-content-primary', isActive);
+          btn.classList.toggle('text-content-tertiary', !isActive);
+          btn.setAttribute('aria-pressed', String(isActive));
+        });
+      }
+
+      function showPanel(panel: HTMLElement) {
+        revealInstantly(panel);
+        panel.querySelectorAll<HTMLElement>('[data-scroll-reveal]').forEach(revealInstantly);
+
+        panel.classList.remove('hidden');
+        panel.classList.add('flex');
+
+        const items = panel.querySelectorAll<HTMLElement>('[data-view-item]');
+        items.forEach((item, i) => {
+          item.style.animationDelay = `${Math.min(i * STAGGER_MS, MAX_STAGGER_MS)}ms`;
+          item.classList.add('view-item-enter');
+        });
+
+        setTimeout(() => {
+          items.forEach((item) => {
+            item.classList.remove('view-item-enter');
+            item.style.animationDelay = '';
+          });
+        }, MAX_STAGGER_MS + ENTER_MS + 50);
+      }
+
+      function setView(view: string) {
+        const activePanel = Array.from(panels).find((p) => !p.classList.contains('hidden'));
+        const nextPanel = Array.from(panels).find((p) => p.dataset.viewPanel === view);
+        if (!nextPanel || activePanel === nextPanel) return;
+
+        setActiveButtons(view);
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!activePanel || prefersReducedMotion) {
+          panels.forEach((panel) => {
+            panel.classList.toggle('hidden', panel !== nextPanel);
+            panel.classList.toggle('flex', panel === nextPanel);
+          });
+          return;
+        }
+
+        activePanel.classList.add('view-panel-exit');
+        setTimeout(() => {
+          activePanel.classList.remove('flex', 'view-panel-exit');
+          activePanel.classList.add('hidden');
+          showPanel(nextPanel);
+        }, EXIT_MS);
+      }
+
+      buttons.forEach((btn) => {
+        if (btn.dataset.viewToggleBound) return;
+        btn.dataset.viewToggleBound = 'true';
+        btn.addEventListener('click', () => setView(btn.dataset.viewBtn!));
+      });
+    });
+  }
+
+  initWorkViewToggle();
+  document.addEventListener('astro:after-swap', initWorkViewToggle);
+</script>

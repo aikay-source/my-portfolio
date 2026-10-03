@@ -1,0 +1,51 @@
+---
+import SelectedWorkItem from './SelectedWorkItem.astro';
+import type { Project } from '../data/projects';
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<!-- Grid view (images) -->
+<div data-view-panel="grid" class="flex flex-col gap-[64px] items-start w-full">
+  {projects.map((project) => (
+    <div class="w-full" data-scroll-reveal data-view-item><SelectedWorkItem {...project} /></div>
+  ))}
+</div>
+
+<!-- List view (no images) -->
+<div data-view-panel="list" class="hidden flex-col items-start w-full" data-scroll-reveal>
+  {projects.map((project) => (
+    <a href={`/works/${project.slug}`} data-view-item class="list-row flex w-full flex-col gap-[8px] border-b-[0.5px] border-border-secondary py-[16px]">
+      <div class="flex items-baseline justify-between gap-[16px] w-full">
+        <h3 class="list-row-name text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
+          {project.name}
+        </h3>
+        <span class="shrink-0 font-mono text-[14px] leading-[20px] text-content-tertiary">
+          {project.year}
+        </span>
+      </div>
+      <p class="text-[16px] leading-[24px] text-content-secondary">
+        {project.title}
+      </p>
+    </a>
+  ))}
+</div>
+
+<script>
+  import { playHoverTick } from '../scripts/sound';
+
+  function initListRowSound() {
+    document.querySelectorAll<HTMLElement>('.list-row').forEach((row) => {
+      if (row.dataset.soundBound) return;
+      row.dataset.soundBound = 'true';
+      row.addEventListener('pointerenter', () => playHoverTick());
+    });
+  }
+
+  initListRowSound();
+  document.addEventListener('astro:after-swap', initListRowSound);
+</script>

@@ -1,35 +1,34 @@
 ---
 import SectionTitle from './SectionTitle.astro';
-import ProjectCard from './ProjectCard.astro';
-import { projects } from '../data/projects';
+import ViewToggle from './ViewToggle.astro';
+import ProjectViewPanels from './ProjectViewPanels.astro';
+import { getProjectBySlug, FEATURED_SLUGS, type Project } from '../data/projects';
+
+const featuredProjects = FEATURED_SLUGS
+  .map((slug) => getProjectBySlug(slug))
+  .filter((project): project is Project => project !== undefined);
 ---
 
-<section class="section-border flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-  <div class="flex w-full max-w-[848px] flex-col gap-[32px] items-center">
-    <!-- Section Title -->
-    <div class="w-full" data-scroll-reveal>
+<section class="content-divider flex flex-col items-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px] w-full">
+  <div class="flex flex-col gap-[32px] items-center max-w-[700px] w-full px-[16px]">
+    <!-- Section Title + View Toggle + See All -->
+    <div class="flex w-full items-end justify-between gap-[16px]" data-scroll-reveal>
       <SectionTitle title="Selected Works" />
-    </div>
 
-    <!-- Project Grid: 2 columns, 64px row gap, 16px column gap -->
-    <div class="flex w-full flex-col gap-[32px]">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[32px] md:gap-y-[64px] w-full">
-        {projects.map((project) => (
-          <div data-scroll-reveal><ProjectCard {...project} /></div>
-        ))}
+      <div class="flex items-center gap-[16px]">
+        <ViewToggle />
+
+        <!-- See All -->
+        <a
+          href="/works"
+          class="nav-link flex items-center gap-[4px] font-mono text-[12px] font-semibold uppercase leading-[16px] text-content-tertiary whitespace-nowrap"
+        >
+          See all projects
+          <span aria-hidden="true">&rarr;</span>
+        </a>
       </div>
-
-      <!-- SEE ALL Button -->
-      <a
-        href="/works"
-        class="btn-hover flex items-center justify-center border border-border-secondary bg-[var(--bg-primary)] p-[12px] self-start"
-      >
-        <span class="flex items-center justify-center px-[4px]">
-          <span class="font-mono text-[14px] font-semibold leading-[20px] text-content-primary">
-            SEE ALL
-          </span>
-        </span>
-      </a>
     </div>
+
+    <ProjectViewPanels projects={featuredProjects} />
   </div>
 </section>

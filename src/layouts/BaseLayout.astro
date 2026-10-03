@@ -13,7 +13,7 @@ interface Props {
 const {
   title = 'Samuel Nwokolo — Product Designer',
   description = 'UX/Product Designer portfolio. I work with founders and product teams to turn messy ideas into clear, conversion-focused designs.',
-  ogImage = '/images/profile.png',
+  ogImage = '/images/og-image.png',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -40,6 +40,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -72,7 +74,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="min-h-screen">
-    <div class="page-wrapper relative mx-auto max-w-[1440px]">
+    <div class="relative mx-auto max-w-[1440px]">
       <Navbar />
       <main>
         <slot />
@@ -82,6 +84,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <script>
       import Lenis from 'lenis';
+      import { playClickSound } from '../scripts/sound';
+
+      function initGlobalClickSound() {
+        document.addEventListener('click', (e) => {
+          const target = (e.target as HTMLElement).closest<HTMLElement>('a, button, [role="button"]');
+          if (!target || target.closest('[data-no-click-sound]')) return;
+          playClickSound();
+        });
+      }
 
       let lenisInstance: Lenis | null = null;
       let rafId: number | null = null;
@@ -171,6 +182,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       initLenis();
       initViewportBlur();
       initScrollReveal();
+      initGlobalClickSound();
 
       document.addEventListener('astro:after-swap', () => {
         window.scrollTo(0, 0);

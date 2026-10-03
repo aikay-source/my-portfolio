@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 
 .vercel
+
+# local design-tool cache (machine-specific paths)
+.impeccable/
