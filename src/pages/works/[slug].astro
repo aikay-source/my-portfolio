@@ -194,6 +194,7 @@ export function getStaticPaths() {
 
 <script>
   import EmblaCarousel from 'embla-carousel';
+  import { playScrollDialTick } from '../../scripts/sound';
 
   let cleanupFns: Array<() => void> = [];
 
@@ -321,6 +322,17 @@ export function getStaticPaths() {
       embla.on('reInit', scheduleOpacityUpdate);
       embla.on('init', scheduleOpacityUpdate);
       scheduleOpacityUpdate();
+
+      // Play the scroll-dial tick on every real slide change (drag or click),
+      // but not for the initial selection embla reports on load.
+      let hasSelectedOnce = false;
+      embla.on('select', () => {
+        if (!hasSelectedOnce) {
+          hasSelectedOnce = true;
+          return;
+        }
+        playScrollDialTick();
+      });
       const settleTimeoutId = setTimeout(updateOpacity, 300);
 
       const cursor = viewport.parentElement?.querySelector<HTMLElement>('[data-filmstrip-cursor]');

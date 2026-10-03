@@ -84,6 +84,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <script>
       import Lenis from 'lenis';
+      import { playClickSound } from '../scripts/sound';
+
+      function initGlobalClickSound() {
+        document.addEventListener('click', (e) => {
+          const target = (e.target as HTMLElement).closest<HTMLElement>('a, button, [role="button"]');
+          if (!target || target.closest('[data-no-click-sound]')) return;
+          playClickSound();
+        });
+      }
 
       let lenisInstance: Lenis | null = null;
       let rafId: number | null = null;
@@ -173,6 +182,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       initLenis();
       initViewportBlur();
       initScrollReveal();
+      initGlobalClickSound();
 
       document.addEventListener('astro:after-swap', () => {
         window.scrollTo(0, 0);

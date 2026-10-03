@@ -382,6 +382,41 @@ a:active .project-card-image {
   color: var(--content-primary);
 }
 
+/* Swipe underline — a faint rail at rest, solid line sweeps in on hover */
+.link-swipe {
+  background-image:
+    linear-gradient(var(--content-primary), var(--content-primary)),
+    linear-gradient(color-mix(in srgb, var(--content-primary) 32%, transparent), color-mix(in srgb, var(--content-primary) 32%, transparent));
+  background-repeat: no-repeat;
+  background-position: 100% 100%, 0% 100%;
+  background-size: 0% 1px, 100% 1px;
+  padding-bottom: 2px;
+  text-decoration: none;
+  transition: background-size 0.28s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.link-swipe:hover,
+.link-swipe:focus-visible {
+  background-position: 0% 100%, 0% 100%;
+  background-size: 100% 1px, 100% 1px;
+}
+
+/* List row spotlight — hovering a row dims every other row's name,
+   keeping the hovered one at full contrast. No JS needed. */
+.list-row-name {
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-view-panel="list"]:has(.list-row:hover) .list-row-name {
+    color: var(--content-tertiary);
+  }
+
+  [data-view-panel="list"]:has(.list-row:hover) .list-row:hover .list-row-name {
+    color: var(--content-primary);
+  }
+}
+
 /* ============================================
    Viewport Blur Overlay (Daniela-Rivas style)
    ============================================ */
