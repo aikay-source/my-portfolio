@@ -3,7 +3,7 @@ import EmailCopyLink from './EmailCopyLink.astro';
 ---
 
 <section class="content-divider flex flex-col items-center justify-center px-[16px] md:px-[40px] lg:px-[80px] py-[32px] md:py-[64px]">
-  <div class="flex w-full max-w-[700px] px-[16px] flex-col-reverse md:flex-row items-start md:items-center md:justify-between gap-[16px] md:gap-0">
+  <div class="flex w-full max-w-[700px] flex-col-reverse md:flex-row items-start md:items-center md:justify-between gap-[16px] md:gap-0">
     <!-- Content -->
     <div class="flex flex-col gap-[24px] items-start w-full md:w-auto">
       <!-- Name + Label -->
@@ -24,7 +24,15 @@ import EmailCopyLink from './EmailCopyLink.astro';
 
         <!-- Email + Social Links -->
         <div class="load-animate load-animate-delay-5 flex flex-wrap items-center gap-[16px]">
-          <EmailCopyLink email="nwokoloikem@gmail.com" label="Email me at" />
+          <!-- Mobile: plain text link, avoids wrapping with the social icons -->
+          <a
+            href="mailto:nwokoloikem@gmail.com"
+            class="link-swipe w-fit text-[16px] leading-[20px] text-content-primary md:hidden"
+          >
+            Email me
+          </a>
+          <!-- Desktop: full "Email me at ... [copy icon] ... email" interaction -->
+          <EmailCopyLink email="nwokoloikem@gmail.com" label="Email me at" class="hidden md:inline-flex" />
           <a
             href="https://www.linkedin.com/in/samuelnwokolo/"
             target="_blank"

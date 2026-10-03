@@ -13,7 +13,7 @@ const { name, title, image, tags, slug, imagePosition = 'center' } = Astro.props
 
 <a href={`/works/${slug}`} class="flex flex-col gap-[24px] items-start w-full group">
   <!-- Image -->
-  <div class="h-[300px] w-full overflow-hidden">
+  <div class="h-[200px] md:h-[300px] w-full overflow-hidden">
     <img
       src={image}
       alt={name}
