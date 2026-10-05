@@ -3,19 +3,29 @@ import SectionTitle from './SectionTitle.astro';
 
 const experiences = [
   {
+    role: 'Senior Designer',
     company: 'Axiom Growth',
-    role: 'UI/UX DESIGNER',
-    date: '2026 - PRESENT',
+    date: '2025 - Present',
   },
   {
-    company: 'Odogwu Technologies',
-    role: 'PRODUCT DESIGNER',
-    date: '2023 - 2026',
+    role: 'Product Designer',
+    company: 'Odogwu technologies',
+    date: '2023 - 2025',
   },
   {
+    role: 'Product Designer',
     company: 'Consode Digital Limited',
-    role: 'PRODUCT DESIGNER',
+    date: '2023 - 2024',
+  },
+  {
+    role: 'Product Design Intern',
+    company: 'Hotel.ng',
     date: '2023',
+  },
+  {
+    role: 'Product Design Trainee',
+    company: 'Zuri Team, inc.',
+    date: '2022',
   },
 ];
 ---
@@ -31,16 +41,16 @@ const experiences = [
     <div class="flex w-full md:w-[632px] flex-col gap-[16px]">
       {experiences.map((exp) => (
         <div class="flex flex-col gap-[8px] border-b-[0.5px] border-border-secondary py-[16px]" data-scroll-reveal>
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-[8px] md:gap-0">
-            <h3 class="flex-1 text-[20px] font-semibold leading-[28px] tracking-[-1px] text-content-primary">
-              {exp.company}
-            </h3>
-            <span class="font-mono text-[14px] leading-[20px] text-content-tertiary">
+          <div class="flex items-center justify-between w-full gap-[16px]">
+            <h3 class="flex-1 text-[14px] font-semibold leading-[20px] text-content-primary">
               {exp.role}
+            </h3>
+            <span class="shrink-0 font-mono text-[14px] leading-[20px] text-content-tertiary">
+              {exp.date}
             </span>
           </div>
           <span class="font-mono text-[14px] leading-[20px] text-content-tertiary">
-            {exp.date}
+            {exp.company}
           </span>
         </div>
       ))}
