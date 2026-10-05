@@ -100,7 +100,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'migor',
-    name: 'Migor',
+    name: 'Miogar',
     title: 'Helping renters turn the rent they already pay into financial stability.',
     summary: 'For many young US renters, rent takes a large share of their income, yet paying it on time does almost nothing for their credit or savings. As the only designer, I designed MIOGAR from sign-up to dashboards for three groups: renters, their landlords, and people staying with family. It connects each renter to their landlord so their rent can count, and coaches them through the money around it.',
     image: '/images/projects/migor/migor_homepage_cover_1.png',
@@ -305,7 +305,7 @@ export const projects: Project[] = [
     imagePosition: 'top',
     role: 'Web Designer',
     tools: ['Figma'],
-    timeline: '2 Weeks',
+    timeline: '3 Weeks',
     filmstrip: [
       '/images/projects/soigne-living/filmstrip/slide-01.png',
       '/images/projects/soigne-living/filmstrip/slide-02.png',
